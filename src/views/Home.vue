@@ -212,6 +212,26 @@ export default {
                 new Match(fulham, watford, score(1, 1)),
                 new Match(arsenal, everton, score(2, 0)),
                 new Match(westHamUnited, chelsea, score(0, 0)),
+                new Match(chelsea, liverpool, score(1, 1)),
+                new Match(wolverhampton, southamptom, score(2, 0)),
+                new Match(newcastleUnited, leicesterCity, score(0, 2)),
+                new Match(manchesterUnited, brighton, score(2, 0)),
+                new Match(huddersfield, tottenhamHotspurs, score(0, 2)),
+                new Match(everton, fulham, score(3, 0)),
+                new Match(arsenal, watford, score(2, 0)),
+                new Match(westHamUnited, manchesterUnited, score(3, 1)),
+                new Match(cardiff, burnley, score(1, 2)),
+                new Match(bournemouth, crystalPalace, score(2, 1)),
+                new Match(brighton, westHamUnited, score(1, 0)),
+                new Match(manchesterUnited, newcastleUnited, score(3, 2)),
+                new Match(watford, bournemouth, score(0, 4)),
+                new Match(tottenhamHotspurs, cardiff, score(1, 0)),
+                new Match(leicesterCity, everton, score(1, 2)),
+                new Match(crystalPalace, wolverhampton, score(0, 1)),
+                new Match(burnley, huddersfield, score(1, 1)),
+                new Match(liverpool, manchesterCity, score(0, 0)),
+                new Match(southamptom, chelsea, score(0, 3)),
+                new Match(fulham, arsenal, score(1, 5))
 
                 ], {
                 iterations: 20000, // the maximum times to iterate the training data --> number greater thn 0
