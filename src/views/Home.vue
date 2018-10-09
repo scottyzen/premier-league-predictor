@@ -104,8 +104,8 @@ export default {
     data() {
         return {
             matchResult: '',
-            homeSelected: 19,
-            awaySelected: 11,
+            homeSelected: 8,
+            awaySelected: 19,
             homeStats: 0,
             teams: [
                 { name: 'Arsenal', number: 15 },
