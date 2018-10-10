@@ -255,7 +255,7 @@ export default {
             new Match(fulham, arsenal, score(1, 5))
 
             ], {
-            iterations: 100, // the maximum times to iterate the training data --> number greater thn 0
+            iterations: 250, // the maximum times to iterate the training data --> number greater thn 0
             })
             console.log('Loaded...');
             this.allowRunTest = true
