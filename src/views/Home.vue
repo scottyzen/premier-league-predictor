@@ -1,14 +1,16 @@
 <template>
     <div class="wrapper">
-        <div  class="alert fade absolute pin-t bg-purple-lightest border-l-4 border-purple rounded-b text-left text-purple-darkest px-6 py-4 my-4 shadow-md" :class='{hide_alert: !showAlertMessage}' role="alert">
-            <div class="flex">
-                <div class="py-1"><svg class="fill-current h-6 w-6 text-purple mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
-                <div>
-                <p class="font-bold">Working</p>
-                <p class="text-sm">Crunching the numbers</p>
+        <transition name="slide">
+            <div  class="alert fade absolute pin-t bg-purple-lightest border-l-4 border-purple rounded-b text-left text-purple-darkest px-6 py-4 my-4 shadow-md" v-if="showAlertMessage" role="alert">
+                <div class="flex">
+                    <div class="py-1"><svg class="fill-current h-6 w-6 text-purple mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+                    <div>
+                    <p class="font-bold">Working</p>
+                    <p class="text-sm">Crunching the numbers</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </transition>
         <div class="max-w-lg m-auto pt-32 mt-20 flex justify-between items-end">
         <div class="w-full md:w-2/5 px-3">
             <label class="text-left block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="home-team">
@@ -43,7 +45,7 @@
         </div>
 
         <div class="w-auto px-3">
-            <button @mousedown="showMessage()" @mouseup="runTest()" :disabled="!allowRunTest" class=" fade bg-grey shadow focus:shadow-outline focus:outline-none text-white font-bold py-3 mt-4 px-4 pt-4 text-md rounded" :class="{ 'opacity-100 bg-purple hover:bg-purple-light': allowRunTest }" type="button">
+            <button @mousedown.prevent="showMessage()" @mouseup.prevent="runTest()" :disabled="!allowRunTest" class=" fade bg-grey shadow focus:shadow-outline focus:outline-none text-white font-bold py-3 mt-4 px-4 pt-4 text-md rounded" :class="{ 'opacity-100 bg-purple hover:bg-purple-light': allowRunTest }" type="button">
                 Predict match
             </button>
         </div>
@@ -200,7 +202,7 @@ function trainMyData() {
         new Match(fulham, arsenal, score(1, 5))
 
         ], {
-        iterations: 100, // the maximum times to iterate the training data --> number greater thn 0
+        iterations: 150, // the maximum times to iterate the training data --> number greater thn 0
         })
 }
 
@@ -241,6 +243,7 @@ export default {
     methods:{
         runTest(){
             // Get the match data
+            this.clearBorderStyle()
             trainMyData()
 
             // Run the two teams agains each other
@@ -260,7 +263,7 @@ export default {
         showMessage(){
 
             this.showAlertMessage = true;
-
+            
             // After 1 second disable the predict button
             setTimeout(() => {
                 this.allowRunTest = false;
@@ -290,7 +293,7 @@ export default {
 
 <style>
 .fade {
-	transition: all 500ms ease-in-out;
+	transition: all 300ms ease-in-out;
 }
 .fade-border {
 	transition: border 300ms ease-in-out;
@@ -303,6 +306,16 @@ export default {
 }
 .hide_alert {
 	transform: translateX(100%);
+}
+.slide-leave-active,
+.slide-enter-active {
+	transition: 100ms;
+}
+.slide-enter {
+	transform: translate(100%, 0);
+}
+.slide-leave-to {
+	transform: translate(100%, 0);
 }
 input,
 button,
