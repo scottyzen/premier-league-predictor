@@ -1,12 +1,69 @@
 <template>
     <div class="wrapper">
         <transition name="slide">
-            <div  class="alert fade absolute pin-t bg-purple-lightest border-l-4 border-purple rounded-b text-left text-purple-darkest px-6 py-4 my-4 shadow-md" v-if="showAlertMessage" role="alert">
+            <div  class="alert fade absolute pin-t bg-purple-lightest border-l-4 border-purple rounded-b text-left text-purple-darkest px-6 py-4 my-4 shadow-md" v-show="showAlertMessage" role="alert">
                 <div class="flex">
-                    <div class="py-1"><svg class="fill-current h-6 w-6 text-purple mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+                    <div class="py-1">
+                        <svg class="fill-current h-6 w-6 text-purple mr-5" viewBox="0 0 105 105" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12.5" cy="12.5" r="12.5">
+                                <animate attributeName="fill-opacity"
+                                begin="0s" dur="1s"
+                                values="1;.2;1" calcMode="linear"
+                                repeatCount="indefinite" />
+                            </circle>
+                            <circle cx="12.5" cy="52.5" r="12.5" fill-opacity=".5">
+                                <animate attributeName="fill-opacity"
+                                begin="100ms" dur="1s"
+                                values="1;.2;1" calcMode="linear"
+                                repeatCount="indefinite" />
+                            </circle>
+                            <circle cx="52.5" cy="12.5" r="12.5">
+                                <animate attributeName="fill-opacity"
+                                begin="300ms" dur="1s"
+                                values="1;.2;1" calcMode="linear"
+                                repeatCount="indefinite" />
+                            </circle>
+                            <circle cx="52.5" cy="52.5" r="12.5">
+                                <animate attributeName="fill-opacity"
+                                begin="600ms" dur="1s"
+                                values="1;.2;1" calcMode="linear"
+                                repeatCount="indefinite" />
+                            </circle>
+                            <circle cx="92.5" cy="12.5" r="12.5">
+                                <animate attributeName="fill-opacity"
+                                begin="800ms" dur="1s"
+                                values="1;.2;1" calcMode="linear"
+                                repeatCount="indefinite" />
+                            </circle>
+                            <circle cx="92.5" cy="52.5" r="12.5">
+                                <animate attributeName="fill-opacity"
+                                begin="400ms" dur="1s"
+                                values="1;.2;1" calcMode="linear"
+                                repeatCount="indefinite" />
+                            </circle>
+                            <circle cx="12.5" cy="92.5" r="12.5">
+                                <animate attributeName="fill-opacity"
+                                begin="700ms" dur="1s"
+                                values="1;.2;1" calcMode="linear"
+                                repeatCount="indefinite" />
+                            </circle>
+                            <circle cx="52.5" cy="92.5" r="12.5">
+                                <animate attributeName="fill-opacity"
+                                begin="500ms" dur="1s"
+                                values="1;.2;1" calcMode="linear"
+                                repeatCount="indefinite" />
+                            </circle>
+                            <circle cx="92.5" cy="92.5" r="12.5">
+                                <animate attributeName="fill-opacity"
+                                begin="200ms" dur="1s"
+                                values="1;.2;1" calcMode="linear"
+                                repeatCount="indefinite" />
+                            </circle>
+                        </svg>
+                    </div>
                     <div>
-                    <p class="font-bold">Working</p>
-                    <p class="text-sm">Crunching the numbers</p>
+                    <p class="font-bold">Hold tight</p>
+                    <p class="text-sm">We're crunching the numbers</p>
                     </div>
                 </div>
             </div>
@@ -45,9 +102,12 @@
         </div>
 
         <div class="w-auto px-3">
-            <button @mousedown.prevent="showMessage()" @mouseup.prevent="runTest()" :disabled="!allowRunTest" class=" fade bg-grey shadow focus:shadow-outline focus:outline-none text-white font-bold py-3 mt-4 px-4 pt-4 text-md rounded" :class="{ 'opacity-100 bg-purple hover:bg-purple-light': allowRunTest }" type="button">
-                Predict match
-            </button>
+            <button 
+            @click="showMessage(runTest, clearBorderStyle)"  
+            :disabled="showAlertMessage" 
+            class="fade shadow focus:shadow-outline focus:outline-none text-white font-bold py-3 mt-4 px-4 pt-4 text-md rounded" 
+            :class="{ 'cursor-pointer bg-grey cursor-not-allowed': showAlertMessage, 'bg-purple hover:bg-purple-dark': !showAlertMessage }" 
+            type="button">Predict match</button>
         </div>
     </div>
     <div class="w-full m-auto text-center max-w-lg mt-10">
@@ -260,14 +320,17 @@ export default {
             this.hideMessage();
             
         },
-        showMessage(){
+        showMessage(callback, callback2){
 
             this.showAlertMessage = true;
-            
+            callback2();
             // After 1 second disable the predict button
             setTimeout(() => {
                 this.allowRunTest = false;
-            }, 1000);
+                callback()
+
+            }, 500);
+            
         },
         hideMessage(){
 
@@ -309,7 +372,7 @@ export default {
 }
 .slide-leave-active,
 .slide-enter-active {
-	transition: 100ms;
+	transition: all 300ms cubic-bezier(0.44, -0.03, 0.04, 1.25);
 }
 .slide-enter {
 	transform: translate(100%, 0);
@@ -317,6 +380,8 @@ export default {
 .slide-leave-to {
 	transform: translate(100%, 0);
 }
+
+*,
 input,
 button,
 select {
