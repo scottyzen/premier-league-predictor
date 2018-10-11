@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper px-4 pt-2 md:pt-20 max-w-xl m-auto">
+    <div class="wrapper px-4 pt-2 md:pt-20 max-w-lg m-auto">
 
         <!-- Premier League logo -->
         <img class="w-1/2 md:w-1/3" src="../assets/Premier-League-logo.png" alt="Premier League Logo">
@@ -24,9 +24,9 @@
 
     <div class="flex flex-wrap items-end mt-8">
         <!-- Select's -->
-        <div class="w-full sm:w-3/4 md:w-4/5 flex">
+        <div class="w-full md:w-4/5 flex">
             <!-- Home select -->
-            <div class="select-wrapper sm:w-1/2 mr-4">
+            <div class="w-full sm:w-1/2 mr-4 md:mr-6">
                 <label class="text-left block uppercase tracking-wide text-grey-darker text-xs font-bold mt-8 mb-2" for="home-team">Home team</label>
                 <div class="relative">
                     <select @change="onChange()" class="fade-border block appearance-none w-full bg-grey-lightest border border-grey-light text-grey-darker py-3 px-4 pr-8 rounded leading-tight" :class="{'border-purple' : homeTeamWin}" v-model="homeSelected">
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <!-- Away select -->
-            <div class="select-wrapper sm:w-1/2 mr-0 sm:mr-4">
+            <div class="w-full sm:w-1/2 mr-0 sm:mr-4 md:mr-6">
                 <label class="text-left block uppercase tracking-wide text-grey-darker text-xs font-bold mt-8 mb-2" for="away-team">Away team</label>
                 <div class="relative">
                     <select @change="onChange()" class="fade-border block appearance-none w-full bg-grey-lightest border border-grey-light text-grey-darker py-3 px-4 pr-8 rounded leading-tight" :class="{'border-purple' : awayTeamWin}" v-model="awaySelected">
@@ -339,7 +339,6 @@ export default {
 }
 
 *,
-input,
 button,
 select {
 	outline: none !important;
