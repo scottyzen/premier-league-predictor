@@ -60,7 +60,7 @@
             <button 
                 @click="showMessage(runTest, clearBorderStyle)"  
                 :disabled="!allowRunTest" 
-                class="fade w-full shadow focus:shadow-outline focus:outline-none text-white font-bold p-4 pt-3 border-t border-b mt-8 text-md rounded" 
+                class="fade w-full shadow focus:shadow-outline focus:outline-none text-white font-bold p-4 pb-3 border-t border-b mt-8 text-md rounded" 
                 :class="{'bg-purple hover:bg-purple-dark': allowRunTest , 'cursor-pointer bg-grey cursor-not-allowed': !allowRunTest}" 
                 type="button">Predict Match</button>
         </div>
