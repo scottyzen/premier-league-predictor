@@ -26,7 +26,7 @@
         <!-- Select's -->
         <div class="w-full md:w-4/5 flex">
             <!-- Home select -->
-            <div class="w-full sm:w-1/2 mr-4 md:mr-6">
+            <div class="w-full sm:w-1/2 mr-4 lg:mr-6">
                 <label class="text-left block uppercase tracking-wide text-grey-darker text-xs font-bold mt-8 mb-2" for="home-team">Home team</label>
                 <div class="relative">
                     <select @change="onChange()" class="fade-border block appearance-none w-full bg-grey-lightest border border-grey-light text-grey-darker py-3 px-4 pr-8 rounded leading-tight" :class="{'border-purple' : homeTeamWin}" v-model="homeSelected">
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <!-- Away select -->
-            <div class="w-full sm:w-1/2 mr-0 sm:mr-4 md:mr-6">
+            <div class="w-full sm:w-1/2 mr-0 md:mr-4 lg:mr-6">
                 <label class="text-left block uppercase tracking-wide text-grey-darker text-xs font-bold mt-8 mb-2" for="away-team">Away team</label>
                 <div class="relative">
                     <select @change="onChange()" class="fade-border block appearance-none w-full bg-grey-lightest border border-grey-light text-grey-darker py-3 px-4 pr-8 rounded leading-tight" :class="{'border-purple' : awayTeamWin}" v-model="awaySelected">
@@ -60,7 +60,7 @@
             <button 
                 @click="showMessage(runTest, clearBorderStyle)"  
                 :disabled="!allowRunTest" 
-                class="fade w-full shadow focus:shadow-outline focus:outline-none text-white font-bold p-4 pb-3 border-t border-b mt-8 text-md rounded" 
+                class="fade w-full shadow focus:shadow-outline focus:outline-none text-white font-bold p-4 md:pb-3 border-t border-b mt-8 text-md rounded" 
                 :class="{'bg-purple hover:bg-purple-dark': allowRunTest , 'cursor-pointer bg-grey cursor-not-allowed': !allowRunTest}" 
                 type="button">Predict Match</button>
         </div>
