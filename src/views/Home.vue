@@ -261,6 +261,9 @@ export default {
         }
     },
     methods:{
+        track () {
+            this.$ga.page('/')
+            },
         runTest(){
             // Get the match data
             this.clearBorderStyle()
