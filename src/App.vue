@@ -11,7 +11,11 @@
 <script>
 /* eslint-disable */
 export default {
-    
+    methods:{
+        track () {
+            this.$ga.page('/')
+        }
+    }
 }
 </script>
 
