@@ -7,7 +7,11 @@ import store from "./store";
 Vue.config.productionTip = false;
 
 Vue.use(VueAnalytics, {
-  id: "UA-127390099-1"
+  id: "UA-127390099-1",
+  router,
+  debug: {
+    enabled: true
+  }
 });
 
 new Vue({
