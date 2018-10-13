@@ -64,6 +64,10 @@ let colors = {
   'purple-lighter': '#d6bbfc',
   'purple-lightest': '#f3ebff',
 
+  'yellow-dark': '#634F3C',
+  'yellow': '#917455',
+  'yellow-light': '#e3b580',
+  'yellow-lightest': '#FFF9EF'
 }
 
 module.exports = {

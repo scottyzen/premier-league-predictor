@@ -1,5 +1,35 @@
 <template>
     <div class="wrapper px-4 pt-2 md:pt-20 max-w-lg m-auto">
+        
+        <!-- Settings -->
+        <div class="settings z-10 bg-yellow-light w-full text-left px-4 py-8 pb-20 absolute pin-b pin-l" :class="{'settings-closed' : !showSettings}">
+
+            <!-- Setting toggle button -->
+            <div class="settings-toggel-button absolute pin-r pin-t bg-yellow-light cursor-pointer rounded-t">
+                <div @click="showSettings = !showSettings" class="flex flex-row items-center">
+                    <span class="font-bold text-white mr-1 hidden md:block">Settings</span>
+                    <!-- UP -->
+                    <svg v-if="!showSettings" class="fill-current text-white" width="28px" viewBox="0 0 20 20"><path d="M10.707 7.05L10 6.343 4.343 12l1.414 1.414L10 9.172l4.243 4.242L15.657 12z"/></svg>
+
+                    <!-- DOWN -->
+                    <svg v-if="showSettings" class="fill-current text-white" width="28px" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+
+                </div>
+            </div>    
+
+            <!-- Setings Options -->
+            <div class="max-w-lg m-auto">
+                <div class="float-left max-w-sm">
+                    <label class="block uppercase tracking-wide text-yellow-dark text-xs mb-2 font-semibold" for="grid-zip">Iterations</label>
+                    <div class="flex w-full">
+                        <small class="block text-yellow-lightest font-semibold">As the number of iterations goes up, the accuracy and time it takes to complete will go up.</small>
+                        <input type="number" class="appearance-none border border-yellow w-24 ml-6 bg-grey-lightest text-grey-darker py-2 px-2 mb-2 rounded leading-tight" name="" id="" v-model="iterations" value="iterations">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
 
         <!-- Premier League logo -->
         <img class="w-1/2 md:w-1/3" src="../assets/Premier-League-logo.png" alt="Premier League Logo">
@@ -22,14 +52,14 @@
             </div>
         </transition>
 
-    <div class="flex flex-wrap items-end mt-8">
+    <div class="flex flex-wrap items-end">
         <!-- Select's -->
         <div class="w-full md:w-4/5 flex">
             <!-- Home select -->
             <div class="w-full sm:w-1/2 mr-4 lg:mr-6">
                 <label class="text-left block uppercase tracking-wide text-grey-darker text-xs font-bold mt-8 mb-2" for="home-team">Home team</label>
                 <div class="relative">
-                    <select @change="onChange()" class="fade-border block appearance-none w-full bg-grey-lightest border border-grey-light text-grey-darker py-3 px-4 pr-8 rounded leading-tight" :class="{'border-purple' : homeTeamWin}" v-model="homeSelected">
+                    <select @change="onChange()" class="fade-border block appearance-none w-full bg-grey-lightest border border-grey-light text-grey-darker py-3 px-4 pr-8 rounded leading-tight" :class="{'border-yellow-light' : homeTeamWin}" v-model="homeSelected">
                         <option v-for="team in teams" v-bind:value="team.number" :key="team.number">
                             {{ team.name }}
                         </option>
@@ -43,7 +73,7 @@
             <div class="w-full sm:w-1/2 mr-0 md:mr-4 lg:mr-6">
                 <label class="text-left block uppercase tracking-wide text-grey-darker text-xs font-bold mt-8 mb-2" for="away-team">Away team</label>
                 <div class="relative">
-                    <select @change="onChange()" class="fade-border block appearance-none w-full bg-grey-lightest border border-grey-light text-grey-darker py-3 px-4 pr-8 rounded leading-tight" :class="{'border-purple' : awayTeamWin}" v-model="awaySelected">
+                    <select @change="onChange()" class="fade-border block appearance-none w-full bg-grey-lightest border border-grey-light text-grey-darker py-3 px-4 pr-8 rounded leading-tight" :class="{'border-yellow-light' : awayTeamWin}" v-model="awaySelected">
                         <option v-for="team in teams" v-bind:value="team.number" :key="team.number">
                             {{ team.name }}
                         </option>
@@ -217,12 +247,8 @@ const data = [
     new Match(fulham, arsenal, score(1, 5))
 ];
 
-const options = {
-    iterations: 150
-};
-
-function trainMyData() {
-    net.train(data, options)
+function trainMyData(iterations) {
+    net.train(data, {iterations: iterations})
 }
 
 export default {
@@ -237,10 +263,13 @@ export default {
             awayTeamWin: false,
             showAlertMessage: false,
             result: null,
+            iterations: 150,
+            showSettings: false,
             teams: [
                 { name: 'Arsenal', number: 15 },
                 { name: 'Bournemouth', number: 11 },
                 { name: 'Brighton', number: 6 },
+                { name: 'Burnley', number: 18 },
                 { name: 'Cardif', number: 12 },
                 { name: 'Chelsea', number: 8 },
                 { name: 'Crystal Palace', number: 10 },
@@ -267,7 +296,7 @@ export default {
         runTest(){
             // Get the match data
             this.clearBorderStyle()
-            trainMyData()
+            trainMyData(this.iterations)
 
             // Run the two teams agains each other
             this.result = net.run([this.homeSelected, this.awaySelected])
@@ -341,10 +370,29 @@ export default {
 	transform: translate(100%, 0);
 }
 
+.settings {
+	box-shadow: 0 20px 0 #e3b584;
+	transition: all 250ms cubic-bezier(0.44, -0.03, 0.04, 1.25);
+}
+.settings-toggel-button {
+	top: -40px;
+	right: 10px;
+	height: 40px;
+	padding: 6px 12px;
+}
+
+.settings-closed {
+	transform: translateY(100%);
+}
+
 *,
 button,
 select {
 	outline: none !important;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+	opacity: 1;
 }
 </style>
 
