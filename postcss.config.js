@@ -4,9 +4,6 @@
 module.exports = {
   "plugins": [
     require('tailwindcss')('tailwind.js'),
-    // isDev ? '' : purgecss({
-    //   content: ['./src/**/*.html', './src/**/*.vue', './src/**/*.scss']
-    // }),
     require('autoprefixer')(),
   ]
 }
