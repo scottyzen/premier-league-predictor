@@ -15,12 +15,24 @@ export default {
         track () {
             this.$ga.page('/')
         }
+    },
+    metaInfo: {
+        title: 'Premier League Predictor',
+        // The value of title will be injected into the %s placeholder in titleTemplate before being rendered
+        titleTemplate: '%s - Premier League Predictor',
+        meta: [
+            { charset: 'utf-8' },
+            { name: 'description', content: 'An app that uses history from the Premier League along with machine learning to try to predict the outcome of a soccor match.' }
+        ]
     }
 }
 </script>
 
 
 <style>
+body {
+	background: #f8fafc;
+}
 #app {
 	font-family: "Avenir", Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
