@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueAnalytics from "vue-analytics";
-import Meta from "vue-meta";
+// import Meta from "vue-meta";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
@@ -11,7 +11,7 @@ Vue.use(VueAnalytics, {
   id: "UA-127390099-1",
   router
 });
-Vue.use(Meta);
+// Vue.use(Meta);
 
 new Vue({
   router,
