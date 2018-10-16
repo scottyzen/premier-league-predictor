@@ -75,33 +75,32 @@
     </div>
 
     <!-- Settings -->
-        <div class="settings z-10 bg-purple w-full text-left px-4 py-8 pb-10 shadow absolute pin-b pin-l" :class="{'settings-closed' : !showSettings}">
+    <div class="settings z-10 bg-purple w-full text-left px-4 py-8 pb-10 shadow absolute pin-b pin-l" :class="{'settings-closed' : !showSettings}">
 
-            <!-- Setting toggle button -->
-            <div class="settings-toggel-button absolute pin-r pin-t bg-purple cursor-pointer rounded-t">
-                <div @click="showSettings = !showSettings" class="flex flex-row items-center">
-                    <span class="font-bold text-white mr-1 hidden md:block">Settings</span>
-                    <!-- UP -->
-                    <svg v-if="!showSettings" class="fill-current text-white" width="28px" viewBox="0 0 20 20"><path d="M10.707 7.05L10 6.343 4.343 12l1.414 1.414L10 9.172l4.243 4.242L15.657 12z"/></svg>
+        <!-- Setting toggle button -->
+        <div class="settings-toggel-button absolute pin-r pin-t bg-purple cursor-pointer rounded-t">
+            <div @click="showSettings = !showSettings" class="flex flex-row items-center">
+                <span class="font-bold text-white mr-1 hidden md:block">Settings</span>
+                <!-- UP -->
+                <svg v-if="!showSettings" class="fill-current text-white" width="28px" viewBox="0 0 20 20"><path d="M10.707 7.05L10 6.343 4.343 12l1.414 1.414L10 9.172l4.243 4.242L15.657 12z"/></svg>
 
-                    <!-- DOWN -->
-                    <svg v-if="showSettings" class="fill-current text-white" width="28px" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                <!-- DOWN -->
+                <svg v-if="showSettings" class="fill-current text-white" width="28px" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
 
-                </div>
-            </div>    
+            </div>
+        </div>    
 
-            <!-- Setings Options -->
-            <div class="max-w-lg m-auto">
-                <div class="float-left max-w-sm">
-                    <label class="block uppercase tracking-wide text-white text-sm mb-2 font-bold" for="grid-zip">Iterations</label>
-                    <div class="flex w-full">
-                        <small class="block text-purple-lightest font-semibold">As the number of iterations goes up, the accuracy and time it takes to complete will go up.</small>
-                        <input type="number" class="appearance-none border-2 border-purple-darker w-24 ml-6 bg-grey-lightest text-grey-darker py-2 px-2 mb-2 rounded leading-tight" name="" id="" v-model="iterations" value="iterations">
-                    </div>
+        <!-- Setings Options -->
+        <div class="max-w-lg m-auto">
+            <div class="float-left max-w-sm">
+                <label class="block uppercase tracking-wide text-white text-sm mb-2 font-bold" for="grid-zip">Iterations</label>
+                <div class="flex w-full">
+                    <small class="block text-purple-lightest font-semibold">As the number of iterations goes up, the accuracy and time it takes to complete will go up.</small>
+                    <input type="number" class="appearance-none border-2 border-purple-darker w-24 ml-6 bg-grey-lightest text-grey-darker py-2 px-2 mb-2 rounded leading-tight" name="" id="" v-model="iterations" value="iterations">
                 </div>
             </div>
-
         </div>
+    </div>
 
   </div>
 </template>
@@ -342,6 +341,9 @@ export default {
 </script>
 
 <style>
+.wrapper {
+	min-height: 100vh;
+}
 .fade {
 	transition: all 300ms ease-in-out;
 }
@@ -369,7 +371,7 @@ export default {
 }
 
 .settings {
-	box-shadow: 0 20px 0 #e3b584;
+	box-shadow: 0 25px 0 #9462dd;
 	transition: all 250ms cubic-bezier(0.44, -0.03, 0.04, 1.25);
 }
 .settings-toggel-button {
