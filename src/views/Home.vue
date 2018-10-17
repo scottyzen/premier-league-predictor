@@ -75,10 +75,10 @@
     </div>
 
     <!-- Settings -->
-    <div class="settings z-10 bg-purple w-full text-left px-4 py-8 pb-10 shadow absolute pin-b pin-l" :class="{'settings-closed' : !showSettings}">
+    <div class="settings z-10 bg-purple border-t-2 border-purple-dark w-full text-left px-4 py-8 pb-10 shadow absolute pin-b pin-l" :class="{'settings-closed' : !showSettings}">
 
         <!-- Setting toggle button -->
-        <div class="settings-toggel-button absolute pin-r pin-t bg-purple cursor-pointer rounded-t">
+        <div class="settings-toggel-button border-2 border-purple-dark border-b-0 absolute pin-r pin-t bg-purple cursor-pointer rounded-t">
             <div @click="showSettings = !showSettings" class="flex flex-row items-center">
                 <span class="font-bold text-white mr-1 hidden md:block">Settings</span>
                 <!-- UP -->
@@ -96,7 +96,7 @@
                 <label class="block uppercase tracking-wide text-white text-sm mb-2 font-bold" for="grid-zip">Iterations</label>
                 <div class="flex w-full">
                     <small class="block text-purple-lightest font-semibold">As the number of iterations goes up, the accuracy and time it takes to complete will go up.</small>
-                    <input type="number" class="appearance-none border-2 border-purple-darker w-24 ml-6 bg-grey-lightest text-grey-darker py-2 px-2 mb-2 rounded leading-tight" name="" id="" v-model="iterations" value="iterations">
+                    <input type="number" class="appearance-none border-2 border-purple-dark w-24 ml-6 bg-grey-lightest text-grey-darker py-2 px-2 mb-2 rounded leading-tight" name="" id="" v-model="iterations" value="iterations">
                 </div>
             </div>
         </div>
