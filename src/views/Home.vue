@@ -344,7 +344,7 @@ export default {
 html,
 body {
 	margin: 0;
-	height: calc(100% - 0);
+	height: 100vh;
 	overflow: hidden;
 }
 .fade {
