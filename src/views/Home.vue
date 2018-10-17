@@ -341,8 +341,11 @@ export default {
 </script>
 
 <style>
-.wrapper {
-	min-height: 100vh;
+html,
+body {
+	margin: 0;
+	height: calc(100% - 0);
+	overflow: hidden;
 }
 .fade {
 	transition: all 300ms ease-in-out;
