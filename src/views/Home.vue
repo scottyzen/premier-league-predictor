@@ -95,7 +95,7 @@
             <div class="float-left max-w-sm">
                 <label class="block uppercase tracking-wide text-white text-sm mb-2 font-bold" for="grid-zip">Iterations</label>
                 <div class="flex w-full">
-                    <small class="block text-purple-lightest font-semibold">As the number of iterations goes up, the accuracy and time it takes to complete will go up.</small>
+                    <small class="block text-purple-lightest font-semibold">As the number of iterations goes up, the accuracy and time it takes to complete will also go up.</small>
                     <input type="number" class="appearance-none border-2 border-purple-dark w-24 ml-6 bg-grey-lightest text-grey-darker py-2 px-2 mb-2 rounded leading-tight" name="" id="" v-model="iterations" value="iterations">
                 </div>
             </div>
