@@ -252,7 +252,8 @@ const data = [
     Match(cardiff, fulham, score(4, 2)),
     Match(bournemouth, southamptom, score(0, 0)),
     Match(chelsea, manchesterUnited, score(2, 2)),
-    Match(everton, crystalPalace, score(2, 0))
+    Match(everton, crystalPalace, score(2, 0)),
+    Match(arsenal, leicesterCity, score(3, 1))
 ];
 
 function trainMyData(iterations) {
