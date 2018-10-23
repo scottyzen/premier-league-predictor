@@ -264,8 +264,8 @@ export default {
     name: 'home',
     data() {
         return {
-            homeSelected: 15,
-            awaySelected: 2,
+            homeSelected: 6,
+            awaySelected: 3,
             allowRunTest: true,
             homeTeamWin: false,
             draw: false,
