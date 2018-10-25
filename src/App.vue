@@ -21,15 +21,28 @@ export default {
 
 
 <style>
+@font-face {
+	font-family: "sofia-pro-soft";
+	src: url("./assets/fonts/SofiaProSoftRegular.ttf");
+}
+@font-face {
+	font-family: "fat-frank";
+	src: url("./assets/fonts/fatfrank-webfont.ttf");
+}
+.fat-frank {
+	font-family: fat-frank;
+	letter-spacing: 1px;
+}
 body {
 	background: #f8fafc;
+	color: #3c4858;
+	font-family: sofia-pro-soft, sans-serif;
+	font-size: 18px;
 }
 #app {
-	font-family: "Avenir", Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
-	color: #2c3e50;
 }
 #nav {
 	padding: 30px;

@@ -1,12 +1,12 @@
 <template>
-    <div class="wrapper px-4 pt-4 md:pt-20 max-w-lg m-auto">
+    <div class="wrapper px-4 pt-6 md:pt-16 max-w-lg m-auto">
         
         <!-- Premier League logo -->
         <img class="w-1/2 md:w-1/3" src="../assets/Premier-League-logo.png" alt="Premier League Logo">
 
-        <h1 class="mb-6 px-16 md:px-4 text-xl md:text-4xl">Premier League Predictor</h1>
+        <h1 class="mb-6 px-16 md:px-4 text-3xl sm:text-4xl fat-frank uppercase">Premier League Predictor.</h1>
 
-        <h2 class="font-normal text-sm md:text-base max-w-xs md:max-w-sm leading-normal m-auto">Using <strong class=" text-purple-darker">match history</strong> along with <strong class=" text-purple-darker">machine learning</strong> to try to predict a matches outcome.</h2>
+        <h2 class="hidden md:block font-normal text-sm md:text-base max-w-xs md:max-w-sm leading-normal m-auto">Using <strong>match history</strong> along with <strong>machine learning</strong> to try to predict a matches outcome.</h2>
 
         <transition name="slide">
             <div  class="alert fade absolute pin-t bg-purple-lightest border-l-4 border-purple rounded-b text-left text-purple-darkest px-6 pt-5 pb-3 my-4 shadow-md" v-show="showAlertMessage" role="alert">
@@ -27,7 +27,7 @@
         <div class="w-full md:w-4/5 flex">
             <!-- Home select -->
             <div class="w-full sm:w-1/2 mr-4 lg:mr-6">
-                <label class="text-left block uppercase tracking-wide text-grey-dark text-xs font-semibold px-4 border-l-2 border-grey-lightest mt-8 mb-2" for="home-team">Home Team</label>
+                <label class="text-left block uppercase tracking-wide text-purple text-xs font-semibold px-4 border-l-2 border-grey-lightest mt-8 mb-2" for="home-team">Home Team</label>
                 <div class="relative">
                     <select @change="onChange()" class="fade-border block font-semibold appearance-none w-full bg-white border border-grey-light hover:border-grey text-grey-darker py-3 px-4 pr-8 rounded leading-tight" :class="{'border-yellow-light text-yellow bg-yellow-lightest' : homeTeamWin}" v-model="homeSelected">
                         <option v-for="team in teams" v-bind:value="team.number" :key="team.number">
@@ -41,7 +41,7 @@
             </div>
             <!-- Away select -->
             <div class="w-full sm:w-1/2 mr-0 md:mr-4 lg:mr-6">
-                <label class="text-left block uppercase tracking-wide text-grey-dark text-xs font-semibold px-4 border-l-2 border-grey-lightest mt-8 mb-2" for="away-team">Away Team</label>
+                <label class="text-left block uppercase tracking-wide text-purple text-xs font-semibold px-4 border-l-2 border-grey-lightest mt-8 mb-2" for="away-team">Away Team</label>
                 <div class="relative">
                     <select @change="onChange()" class="fade-border block font-semibold appearance-none w-full bg-white border border-grey-light hover:border-grey text-grey-darker py-3 px-4 pr-8 rounded leading-tight" :class="{'border-yellow-light text-yellow bg-yellow-lightest' : awayTeamWin}" v-model="awaySelected">
                         <option v-for="team in teams" v-bind:value="team.number" :key="team.number">
@@ -356,6 +356,7 @@ body {
 	margin: 0;
 	height: 100vh;
 	overflow: hidden;
+	border-top: 1.5px solid #9662da;
 }
 .fade {
 	transition: all 300ms ease-in-out;
