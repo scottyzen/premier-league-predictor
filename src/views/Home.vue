@@ -279,7 +279,7 @@ export default {
                 { name: 'Bournemouth', number: 11 },
                 { name: 'Brighton', number: 6 },
                 { name: 'Burnley', number: 18 },
-                { name: 'Cardif', number: 12 },
+                { name: 'Cardiff', number: 12 },
                 { name: 'Chelsea', number: 8 },
                 { name: 'Crystal Palace', number: 10 },
                 { name: 'Everton', number: 4 },
