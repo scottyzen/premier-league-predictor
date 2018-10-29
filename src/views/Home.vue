@@ -1,108 +1,88 @@
 <template>
-    <div class="wrapper px-4 pt-6 md:pt-16 max-w-lg m-auto">
-        
-        <!-- Premier League logo -->
-        <img class="w-1/2 md:w-1/3" src="../assets/Premier-League-logo.png" alt="Premier League Logo">
+    <div class="wrapper px-4 pt-6 md:pt-16 h-screen shadow-lg" :class="{'move-right': menuIsOpen}">
+        <button class="hamburger hamburger--spin absolute pin-l pin-t" :class="{'is-active': menuIsOpen}" type="button" @click="menuIsOpen = !menuIsOpen">
+            <span class="hamburger-box">
+                <span class="hamburger-inner"></span>
+            </span>
+        </button>
 
-        <h1 class="mb-6 px-16 md:px-4 text-3xl sm:text-4xl fat-frank uppercase">Premier League Predictor.</h1>
-
-        <h2 class="hidden md:block font-normal text-sm md:text-base max-w-xs md:max-w-sm leading-normal m-auto">Using <strong>match history</strong> along with <strong>machine learning</strong> to try to predict a matches outcome.</h2>
-
-        <transition name="slide">
-            <div  class="alert fade absolute pin-t bg-purple-lightest border-l-4 border-purple rounded-b text-left text-purple-darkest px-6 pt-5 pb-3 my-4 shadow-md" v-show="showAlertMessage" role="alert">
-                <div class="flex">
-                    <div class="py-1">
-                        <img width="32px" class="mr-5" src="../assets/loading.gif">
-                    </div>
-                    <div>
-                    <p class="font-bold">Hold on tight</p>
-                    <p class="text-sm">We're crunching the numbers</p>
-                    </div>
-                </div>
-            </div>
-        </transition>
-
-    <div class="flex flex-wrap items-end">
-        <!-- Select's -->
-        <div class="w-full md:w-4/5 flex">
-            <!-- Home select -->
-            <div class="w-full sm:w-1/2 mr-4 lg:mr-6">
-                <label class="text-left block uppercase tracking-wide text-purple text-xs font-semibold px-4 border-l-2 border-grey-lightest mt-8 mb-2" for="home-team">Home Team</label>
-                <div class="relative">
-                    <select @change="onChange()" class="fade-border block font-semibold appearance-none w-full bg-white border border-grey-light hover:border-grey text-grey-darker py-3 px-4 pr-8 rounded leading-tight" :class="{'border-yellow-light text-yellow bg-yellow-lightest' : homeTeamWin}" v-model="homeSelected">
-                        <option v-for="team in teams" v-bind:value="team.number" :key="team.number">
-                            {{ team.name }}
-                        </option>
-                    </select>
-                    <div class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">
-                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
-                    </div>
-                </div>
-            </div>
-            <!-- Away select -->
-            <div class="w-full sm:w-1/2 mr-0 md:mr-4 lg:mr-6">
-                <label class="text-left block uppercase tracking-wide text-purple text-xs font-semibold px-4 border-l-2 border-grey-lightest mt-8 mb-2" for="away-team">Away Team</label>
-                <div class="relative">
-                    <select @change="onChange()" class="fade-border block font-semibold appearance-none w-full bg-white border border-grey-light hover:border-grey text-grey-darker py-3 px-4 pr-8 rounded leading-tight" :class="{'border-yellow-light text-yellow bg-yellow-lightest' : awayTeamWin}" v-model="awaySelected">
-                        <option v-for="team in teams" v-bind:value="team.number" :key="team.number">
-                            {{ team.name }}
-                        </option>
-                    </select>
-                    <div class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">
-                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Button -->
-        <div class="w-full sm:flex-1">
-            <button 
-                @click="showMessage(runTest, clearBorderStyle)"  
-                :disabled="!allowRunTest" 
-                class="fade w-full shadow focus:shadow-outline focus:outline-none text-white font-bold p-4 md:pb-3 border-t border-b mt-8 text-md rounded" 
-                :class="{'bg-purple hover:bg-purple-dark': allowRunTest , 'cursor-pointer bg-grey cursor-not-allowed': !allowRunTest}" 
-                type="button">Predict Match</button>
-        </div>
-    </div>
-
-    <div class="w-full m-auto text-center max-w-lg mt-8 md:mt-12">
-        <div class="w-full mt-8 text-lg md:text-3xl" >
-            <p v-if="homeTeamWin">We are going for the home team</p>
-            <p v-if="draw">We are going for a Draw on this one.</p>
-            <p v-if="awayTeamWin">We are going for the away team</p>
-        </div>
-    </div>
-
-    <!-- Settings -->
-    <div class="settings z-10 bg-purple border-t-2 border-purple-dark w-full text-left px-4 py-8 pb-10 shadow absolute pin-b pin-l" :class="{'settings-closed' : !showSettings}">
-
-        <!-- Setting toggle button -->
-        <div class="settings-toggel-button border-2 border-purple-dark border-b-0 absolute pin-r pin-t bg-purple cursor-pointer rounded-t">
-            <div @click="showSettings = !showSettings" class="flex flex-row items-center">
-                <span class="font-bold text-white mr-1 hidden md:block">Settings</span>
-                <!-- UP -->
-                <svg v-if="!showSettings" class="fill-current text-white" width="28px" viewBox="0 0 20 20"><path d="M10.707 7.05L10 6.343 4.343 12l1.414 1.414L10 9.172l4.243 4.242L15.657 12z"/></svg>
-
-                <!-- DOWN -->
-                <svg v-if="showSettings" class="fill-current text-white" width="28px" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-
-            </div>
-        </div>    
-
-        <!-- Setings Options -->
         <div class="max-w-lg m-auto">
-            <div class="float-left max-w-sm">
-                <label class="block uppercase tracking-wide text-white text-sm mb-2 font-bold" for="grid-zip">Iterations</label>
-                <div class="flex w-full">
-                    <small class="block text-purple-lightest font-semibold">As the number of iterations goes up, the accuracy and time it takes to complete will also go up.</small>
-                    <input type="number" class="appearance-none border-2 border-purple-dark w-24 ml-6 bg-grey-lightest text-grey-darker py-2 px-2 mb-2 rounded leading-tight" name="" id="" v-model="iterations" value="iterations">
+            
+            <!-- Premier League logo -->
+            <img class="w-1/2 md:w-1/3" src="../assets/Premier-League-logo.png" alt="Premier League Logo">
+
+            <h1 class="mb-6 md:px-4 text-3xl sm:text-4xl fat-frank uppercase">Premier League Predictor.</h1>
+
+            <h2 class="hidden md:block font-normal text-sm md:text-base max-w-xs md:max-w-sm leading-normal m-auto">Using <strong>match history</strong> along with <strong>machine learning</strong> to try to predict a matches outcome.</h2>
+
+            <transition name="slide">
+                <div  class="alert fade absolute pin-t bg-purple-lightest border-l-4 border-purple rounded-b text-left text-purple-darkest px-6 pt-5 pb-3 my-4 shadow-md" v-show="showAlertMessage" role="alert">
+                    <div class="flex">
+                        <div class="py-1">
+                            <img width="32px" class="mr-5" src="../assets/loading.gif">
+                        </div>
+                        <div>
+                        <p class="font-bold">Hold on tight</p>
+                        <p class="text-sm">We're crunching the numbers</p>
+                        </div>
+                    </div>
+                </div>
+            </transition>
+
+        <div class="flex flex-wrap items-end">
+            <!-- Select's -->
+            <div class="w-full md:w-4/5 flex">
+                <!-- Home select -->
+                <div class="w-full sm:w-1/2 mr-4 lg:mr-6">
+                    <label class="text-left block uppercase tracking-wide text-purple text-xs font-semibold px-4 border-l-2 border-grey-lightest mt-8 mb-2" for="home-team">Home Team</label>
+                    <div class="relative">
+                        <select @change="onChange()" class="fade-border block font-semibold appearance-none w-full bg-white border border-grey-light hover:border-grey text-grey-darker py-3 px-4 pr-8 rounded leading-tight" :class="{'border-yellow-light text-yellow bg-yellow-lightest' : homeTeamWin}" v-model="homeSelected">
+                            <option v-for="team in teams" v-bind:value="team.number" :key="team.number">
+                                {{ team.name }}
+                            </option>
+                        </select>
+                        <div class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                        </div>
+                    </div>
+                </div>
+                <!-- Away select -->
+                <div class="w-full sm:w-1/2 mr-0 md:mr-4 lg:mr-6">
+                    <label class="text-left block uppercase tracking-wide text-purple text-xs font-semibold px-4 border-l-2 border-grey-lightest mt-8 mb-2" for="away-team">Away Team</label>
+                    <div class="relative">
+                        <select @change="onChange()" class="fade-border block font-semibold appearance-none w-full bg-white border border-grey-light hover:border-grey text-grey-darker py-3 px-4 pr-8 rounded leading-tight" :class="{'border-yellow-light text-yellow bg-yellow-lightest' : awayTeamWin}" v-model="awaySelected">
+                            <option v-for="team in teams" v-bind:value="team.number" :key="team.number">
+                                {{ team.name }}
+                            </option>
+                        </select>
+                        <div class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <!-- Button -->
+            <div class="w-full sm:flex-1">
+                <button 
+                    @click="showMessage(runTest, clearBorderStyle)"  
+                    :disabled="!allowRunTest" 
+                    class="fade w-full shadow focus:shadow-outline focus:outline-none text-white font-bold p-4 md:pb-3 border-t border-b mt-4 text-md rounded" 
+                    :class="{'bg-purple hover:bg-purple-dark': allowRunTest , 'cursor-pointer bg-grey cursor-not-allowed': !allowRunTest}" 
+                    type="button">Predict Match</button>
+            </div>
+        </div>
+
+        <div class="w-full m-auto text-center max-w-lg mt-8 md:mt-12">
+            <div class="w-full mt-8 text-lg md:text-3xl" >
+                <p v-if="homeTeamWin">We are going for the home team</p>
+                <p v-if="draw">We are going for a Draw on this one.</p>
+                <p v-if="awayTeamWin">We are going for the away team</p>
+            </div>
+        </div>
+
         </div>
     </div>
-
-  </div>
 </template>
 
 <script>
@@ -253,26 +233,37 @@ const data = [
     Match(bournemouth, southamptom, score(0, 0)),
     Match(chelsea, manchesterUnited, score(2, 2)),
     Match(everton, crystalPalace, score(2, 0)),
-    Match(arsenal, leicesterCity, score(3, 1))
+    Match(arsenal, leicesterCity, score(3, 1)),
+    Match(leicesterCity, westHamUnited, score(1, 1)),
+    Match(watford, huddersfield, score(3, 0)),
+    Match(southamptom, newcastleUnited, score(0, 0)),
+    Match(liverpool, cardiff, score(4, 1)),
+    Match(fulham, bournemouth, score(0, 3)),
+    Match(brighton, wolverhampton, score(1, 0)),
+    Match(manchesterUnited, everton, score(2, 1)),
+    Match(crystalPalace, arsenal, score(2, 2)),
+    Match(burnley, chelsea, score(0, 4)),
+    Match(tottenhamHotspurs, manchesterCity, score(0, 1))
+
 ];
 
-function trainMyData(iterations) {
-    net.train(data, {iterations: iterations})
+function trainMyData(iter) {
+    net.train(data, {iterations: iter})
 }
 
 export default {
     name: 'home',
     data() {
         return {
-            homeSelected: 6,
-            awaySelected: 3,
+            homeSelected: 11,
+            awaySelected: 1,
             allowRunTest: true,
             homeTeamWin: false,
             draw: false,
             awayTeamWin: false,
             showAlertMessage: false,
             result: null,
-            iterations: 150,
+            menuIsOpen : false,
             showSettings: false,
             teams: [
                 { name: 'Arsenal', number: 15 },
@@ -302,7 +293,7 @@ export default {
         runTest(){
             // Get the match data
             this.clearBorderStyle()
-            trainMyData(this.iterations)
+            trainMyData(this.$store.state.iterations)
 
             // Run the two teams agains each other
             this.result = net.run([this.homeSelected, this.awaySelected])
@@ -351,12 +342,26 @@ export default {
 </script>
 
 <style>
+.wrapper {
+	transform: none;
+	-webkit-transform: none;
+	transition: transform 300ms ease-in-out;
+	will-change: transform;
+}
+
+.move-right {
+	transform: translateX(300px);
+	-webkit-transform: translateX(300px);
+	transition: transform 300ms ease-in-out;
+	will-change: transform;
+}
+
 html,
 body {
 	margin: 0;
 	height: 100vh;
 	overflow: hidden;
-	border-top: 1.5px solid #9662da;
+	border-top: 2px solid #9662da;
 }
 .fade {
 	transition: all 300ms ease-in-out;
