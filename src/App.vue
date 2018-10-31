@@ -1,40 +1,32 @@
 <template>
-  <div id="app" class="relative min-h-screen overflow-hidden">
+  <div id="app" class="relative min-h-screen overflow-hidden bg-purple">
     <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div> -->
-    <div class="h-screen absolute pin-t pin-l py-8 text-purple-lightest text-left" style="max-width: 280px; padding-left: 10px">
+    <div class="h-screen absolute pin-t pin-l py-8 text-purple-lightest text-left" style="max-width: 280px; padding-left: 20px">
 
-        <p>
-        Powered by BrainJS, <strong>Premier League Predictor</strong> uses match history from this year's Premier League, along with machine learning to try to predict the outcome of a soccer match.
+        <span class="block uppercase text-purple-darker mb-2 font-bold">About</span>
+        <p class=" text-sm">
+        Powered by BrainJS, Premier League Predictor uses match history from this year's Premier League, along with machine learning to try to predict the outcome of a soccer match.
         </p>
-        <a href="https://github.com/BrainJS" target="blank">
-            <img src="./assets/brainjs.svg" width="36px" class="m-1 mt-3 mr-2" alt="Brain.js logo">
-        </a>
-        <a href="https://www.skysports.com/premier-league-results" target="blank">
-            <img src="./assets/Premier-League-logo-sm.png" width="36px" class="m-1 mt-3" alt="premier league logo">
-        </a>
-        
+
         <div class="mt-12">
+            <span class="block uppercase text-purple-darker mb-2 font-bold">Settings</span>
             <div class="flex w-full items-center">
-                <!-- <small class="block text-purple-lightest font-semibold">As the number of iterations goes up, the accuracy and time it takes to complete will also go up.</small> -->
-                <label class="block tracking-wide text-white text-sm mb-2 font-bold flex-1" for="iterations">
-                    ITERATIONS
-                    <br>
-                    <small class="block text-purple-lightest font-semibold mt-1">Increases the accuracy and time it takes to run</small>
+                <label class="mb-2 flex-1" for="iterations">
+                    <span class="text-xs font-bold tracking-wide">ITERATIONS</span>
+                    <p class="block mt-1 text-sm">Increases the accuracy and time it takes to run</p>
                 </label>
                 <input 
                 type="number" 
                 min="0"
+                step="10"
                 @change="updateIterationValue(num)" 
-                class="appearance-none border-2 border-purple-dark w-24 ml-4 bg-grey-lightest text-grey-darker py-2 px-2 rounded leading-tight h-10" 
+                class="appearance-none border-2 border-purple-dark w-20 ml-2 mt-2 font-bold bg-grey-lightest text-grey-darker px-2 rounded leading-tight h-10" 
                 name="iterations" 
                 v-model="num">
             </div>
-        </div>
-        <div class="p-4 absolute pin-b pin-l">
-            <a href="https://twitter.com/scottyzen?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-size="large" data-show-count="false">Follow @scottyzen</a>
         </div>
     </div>
     <router-view class="background-light"></router-view>
@@ -82,10 +74,8 @@ export default {
 body {
 	color: #3c4858;
 	font-family: sofia-pro-soft, sans-serif;
-	font-size: 18px;
 }
 #app {
-	background: #9462dd;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
@@ -104,5 +94,12 @@ body {
 
 #nav a.router-link-exact-active {
 	color: #42b983;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+
+opacity: 1;
+
 }
 </style>

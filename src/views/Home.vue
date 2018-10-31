@@ -38,9 +38,9 @@
             <div class="w-full md:w-4/5 flex">
                 <!-- Home select -->
                 <div class="w-full sm:w-1/2 mr-4 lg:mr-6">
-                    <label class="text-left block uppercase tracking-wide text-purple text-xs font-semibold px-4 border-l-2 border-grey-lightest mt-4 md:mt-8 mb-2" for="home-team">Home Team</label>
+                    <label class="select__label md:mt-8" for="home-team">Home Team</label>
                     <div class="relative">
-                        <select @change="onChange()" class="fade-border block font-semibold appearance-none w-full bg-white border border-grey-light hover:border-grey text-grey-darker py-3 px-4 pr-8 rounded leading-tight" :class="{'border-yellow-light text-yellow bg-yellow-lightest' : homeTeamWin}" v-model="homeSelected">
+                        <select @change="onChange()" class="fade-border select" :class="{'select--yellow' : homeTeamWin}" v-model="homeSelected">
                             <option v-for="team in teams" v-bind:value="team.number" :key="team.number">
                                 {{ team.name }}
                             </option>
@@ -52,9 +52,9 @@
                 </div>
                 <!-- Away select -->
                 <div class="w-full sm:w-1/2 mr-0 md:mr-4 lg:mr-6">
-                    <label class="text-left block uppercase tracking-wide text-purple text-xs font-semibold px-4 border-l-2 border-grey-lightest mt-4 md:mt-8 mb-2" for="away-team">Away Team</label>
+                    <label class="select__label md:mt-8" for="away-team">Away Team</label>
                     <div class="relative">
-                        <select @change="onChange()" class="fade-border block font-semibold appearance-none w-full bg-white border border-grey-light hover:border-grey text-grey-darker py-3 px-4 pr-8 rounded leading-tight" :class="{'border-yellow-light text-yellow bg-yellow-lightest' : awayTeamWin}" v-model="awaySelected">
+                        <select @change="onChange()" class="fade-border select" :class="{'select--yellow' : awayTeamWin}" v-model="awaySelected">
                             <option v-for="team in teams" v-bind:value="team.number" :key="team.number">
                                 {{ team.name }}
                             </option>
@@ -71,7 +71,7 @@
                 <button 
                     @click="showMessage(runTest, clearBorderStyle)"  
                     :disabled="!allowRunTest" 
-                    class="fade w-full shadow focus:shadow-outline focus:outline-none text-white font-bold p-4 md:pb-3 border-t border-b mt-4 text-md rounded" 
+                    class="fade btn md:pb-3 " 
                     :class="{'bg-purple hover:bg-purple-dark': allowRunTest , 'cursor-pointer bg-grey cursor-not-allowed': !allowRunTest}" 
                     type="button">Predict Match</button>
             </div>
@@ -270,7 +270,6 @@ export default {
             showAlertMessage: false,
             result: null,
             menuIsOpen : false,
-            showSettings: false,
             thinking: false,
             teams: [
                 { name: 'Arsenal', number: 15 },
@@ -324,7 +323,7 @@ export default {
             
         },
         showMessage(callback, callback2){
-
+            this.menuIsOpen= false;
             this.showAlertMessage = true;
             this.allowRunTest = false;
             
@@ -366,18 +365,15 @@ export default {
 </script>
 
 <style>
+
 .wrapper {
 	transform: none;
-	-webkit-transform: none;
-	transition: transform 300ms ease-in-out;
+	transition: all 300ms ease-in-out;
 	will-change: transform;
 }
 
 .move-right {
 	transform: translateX(300px);
-	-webkit-transform: translateX(300px);
-	transition: transform 300ms ease-in-out;
-	will-change: transform;
 }
 
 html,
@@ -433,10 +429,6 @@ button,
 select {
 	outline: none !important;
 }
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-	opacity: 1;
-}
 
 /* LOGO */
 
@@ -451,10 +443,10 @@ input[type="number"]::-webkit-outer-spin-button {
 	}
 }
 @keyframes spinning {
-	0% {
-		transform: rotate(0deg);
+	from {
+		transform: rotateY(0deg);
 	}
-	100% {
+	to {
 		transform: rotateY(360deg);
 	}
 }
