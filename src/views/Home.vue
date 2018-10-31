@@ -9,7 +9,10 @@
         <div class="max-w-lg m-auto">
             
             <!-- Premier League logo -->
-            <img class="w-1/2 md:w-1/3" src="../assets/Premier-League-logo.png" alt="Premier League Logo">
+            <div class="logo-box flex m-auto p-4 content-center items-center justify-center">
+                <img class="m-auto" :class="{'spinning': thinking}" :src="winningTeamLogo" alt="Premier League Logo">
+            </div>
+            
 
             <h1 class="mb-6 md:px-4 text-3xl sm:text-4xl fat-frank uppercase">Premier League Predictor.</h1>
 
@@ -34,7 +37,7 @@
             <div class="w-full md:w-4/5 flex">
                 <!-- Home select -->
                 <div class="w-full sm:w-1/2 mr-4 lg:mr-6">
-                    <label class="text-left block uppercase tracking-wide text-purple text-xs font-semibold px-4 border-l-2 border-grey-lightest mt-8 mb-2" for="home-team">Home Team</label>
+                    <label class="text-left block uppercase tracking-wide text-purple text-xs font-semibold px-4 border-l-2 border-grey-lightest mt-4 md:mt-8 mb-2" for="home-team">Home Team</label>
                     <div class="relative">
                         <select @change="onChange()" class="fade-border block font-semibold appearance-none w-full bg-white border border-grey-light hover:border-grey text-grey-darker py-3 px-4 pr-8 rounded leading-tight" :class="{'border-yellow-light text-yellow bg-yellow-lightest' : homeTeamWin}" v-model="homeSelected">
                             <option v-for="team in teams" v-bind:value="team.number" :key="team.number">
@@ -48,7 +51,7 @@
                 </div>
                 <!-- Away select -->
                 <div class="w-full sm:w-1/2 mr-0 md:mr-4 lg:mr-6">
-                    <label class="text-left block uppercase tracking-wide text-purple text-xs font-semibold px-4 border-l-2 border-grey-lightest mt-8 mb-2" for="away-team">Away Team</label>
+                    <label class="text-left block uppercase tracking-wide text-purple text-xs font-semibold px-4 border-l-2 border-grey-lightest mt-4 md:mt-8 mb-2" for="away-team">Away Team</label>
                     <div class="relative">
                         <select @change="onChange()" class="fade-border block font-semibold appearance-none w-full bg-white border border-grey-light hover:border-grey text-grey-darker py-3 px-4 pr-8 rounded leading-tight" :class="{'border-yellow-light text-yellow bg-yellow-lightest' : awayTeamWin}" v-model="awaySelected">
                             <option v-for="team in teams" v-bind:value="team.number" :key="team.number">
@@ -265,6 +268,7 @@ export default {
             result: null,
             menuIsOpen : false,
             showSettings: false,
+            thinking: false,
             teams: [
                 { name: 'Arsenal', number: 15 },
                 { name: 'Bournemouth', number: 11 },
@@ -292,6 +296,7 @@ export default {
     methods:{
         runTest(){
             // Get the match data
+            this.thinking = true;
             this.clearBorderStyle()
             trainMyData(this.$store.state.iterations)
 
@@ -310,6 +315,9 @@ export default {
 
             // Hide the working message and make the predit button clickable
             this.hideMessage();
+            setTimeout(() => {
+                this.thinking = false;
+            }, 300);
             
         },
         showMessage(callback, callback2){
@@ -336,6 +344,19 @@ export default {
             // Check if selected teams are the same
             this.allowRunTest = (this.homeSelected == this.awaySelected) ? false: true;
             this.clearBorderStyle();            
+        }
+    },
+    computed: {
+        winningTeamLogo () {
+            
+            if (this.homeTeamWin) {
+                return require('@/assets/badges/'+this.homeSelected+'.svg')
+            }
+            if (this.awayTeamWin) {
+                return require('@/assets/badges/'+this.awaySelected+'.svg')
+            }
+            return require('../assets/Premier-League-logo.png');
+
         }
     }
 };
@@ -412,6 +433,23 @@ select {
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
 	opacity: 1;
+}
+
+/* LOGO */
+.logo-box {
+	width: 200px;
+	height: 240px;
+}
+@keyframes spinning {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotateY(360deg);
+	}
+}
+.spinning {
+	animation: spinning 300ms linear infinite;
 }
 </style>
 
