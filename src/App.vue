@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="p-4 absolute pin-b pin-l">
-            <a href="https://twitter.com/scottyzen?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @scottyzen</a>
+            <a href="https://twitter.com/scottyzen?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-size="large" data-show-count="false">Follow @scottyzen</a>
         </div>
     </div>
     <router-view class="background-light"></router-view>
