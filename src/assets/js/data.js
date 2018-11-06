@@ -160,5 +160,8 @@ export const data = [
     Match(newcastleUnited, watford, score(1, 0)),
     Match(westHamUnited, burnley, score(4, 2)),
     Match(arsenal, liverpool, score(1, 1)),
-    Match(wolverhampton, tottenhamHotspurs, score(2, 3))
+    Match(wolverhampton, tottenhamHotspurs, score(2, 3)),
+    Match(chelsea, crystalPalace, score(3, 1)),
+    Match(manchesterCity, southamptom, score(6, 1)),
+    Match(huddersfield, fulham, score(1, 0))
 ];
