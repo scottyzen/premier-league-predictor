@@ -107,8 +107,8 @@ export default {
     name: 'home',
     data() {
         return {
-            homeSelected: 11,
-            awaySelected: 1,
+            homeSelected: 12,
+            awaySelected: 6,
             allowRunTest: true,
             homeTeamWin: false,
             draw: false,
