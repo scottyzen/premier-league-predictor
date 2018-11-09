@@ -20,7 +20,7 @@
                 </label>
                 <input 
                 type="number" 
-                min="0"
+                min="10"
                 step="10"
                 @change="updateIterationValue(num)" 
                 class="appearance-none border-2 border-purple-dark w-20 ml-2 mt-2 font-bold bg-grey-lightest text-grey-darker px-2 rounded leading-tight h-10" 

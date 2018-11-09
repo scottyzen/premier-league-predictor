@@ -95,13 +95,9 @@ import '@/assets/styles/main.css';
 import brain from 'brain.js';
 import {data} from '@/assets/js/data.js';
 
-let net = new brain.recurrent.RNN();
-
-console.log(data);
-
-function trainMyData(iter) {
-    net.train(data, {iterations: iter})
-}
+let net = new brain.recurrent.RNN({
+    hiddenLayers: [3,4,2]
+});
 
 export default {
     name: 'home',
@@ -146,7 +142,11 @@ export default {
             // Get the match data
             this.thinking = true;
             this.clearBorderStyle()
-            trainMyData(this.$store.state.iterations)
+            net.train(data, {
+                    iterations: this.$store.state.iterations,
+                    log: details => console.log(details)
+                }
+            )
 
             // Run the two teams agains each other
             this.result = net.run([this.homeSelected, this.awaySelected])
