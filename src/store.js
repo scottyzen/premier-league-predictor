@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    iterations: 150
+    iterations: 50
   },
   mutations: {
     setIterations(state, payload) {
