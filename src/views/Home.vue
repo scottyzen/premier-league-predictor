@@ -95,16 +95,14 @@ import '@/assets/styles/main.css';
 import brain from 'brain.js';
 import {data} from '@/assets/js/data.js';
 
-let net = new brain.recurrent.RNN({
-    hiddenLayers: [3,4,2]
-});
+let net = new brain.recurrent.RNN();
 
 export default {
     name: 'home',
     data() {
         return {
-            homeSelected: 12,
-            awaySelected: 6,
+            homeSelected: 16,
+            awaySelected: 1,
             allowRunTest: true,
             homeTeamWin: false,
             draw: false,
