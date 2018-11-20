@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper px-4 pt-4 md:pt-16 h-screen shadow-lg" :class="{'move-right': menuIsOpen}">
-        <button class="hamburger hamburger--spin absolute pin-l pin-t" :class="{'is-active': menuIsOpen}" type="button" @click="menuIsOpen = !menuIsOpen">
+        <button class="hamburger hamburger--spin absolute pin-l pin-t m-3" :class="{'is-active': menuIsOpen}" type="button" @click="menuIsOpen = !menuIsOpen">
             <span class="hamburger-box">
                 <span class="hamburger-inner"></span>
             </span>
@@ -95,14 +95,14 @@ import '@/assets/styles/main.css';
 import brain from 'brain.js';
 import {data} from '@/assets/js/data.js';
 
-let net = new brain.recurrent.RNN();
+const net = new brain.recurrent.RNN();
 
 export default {
     name: 'home',
     data() {
         return {
-            homeSelected: 16,
-            awaySelected: 1,
+            homeSelected: 6,
+            awaySelected: 2,
             allowRunTest: true,
             homeTeamWin: false,
             draw: false,
@@ -140,15 +140,33 @@ export default {
             // Get the match data
             this.thinking = true;
             this.clearBorderStyle()
-            net.train(data, {
-                    iterations: this.$store.state.iterations,
-                    log: details => console.log(details)
-                }
-            )
 
             // Run the two teams agains each other
-            this.result = net.run([this.homeSelected, this.awaySelected])
+            var avgArray = [];
+            var getAvg = (times) => {
+
+                for (let index = 0; index < times; index++) {
+                    net.train(data, { iterations: 10 } );
+                    var newResult = parseFloat(net.run([this.homeSelected, this.awaySelected]));
+                    
+                    if (newResult < 0) { newResult = 0 }
+                    if (newResult > 1) { newResult = 1 }
+
+                    if (!isNaN(newResult)) {
+                        avgArray = [...avgArray, newResult]
+                    }
+                }
+
+            }
+
+            getAvg(this.$store.state.accuracy);
+            const average = arr => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
+
+            console.log(avgArray);
+            
+            this.result = average( avgArray )
             console.log(this.result);
+            
 
             // Set the winning team to true
             if(this.result == 0.5 ){

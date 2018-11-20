@@ -14,17 +14,18 @@
         <div class="mt-12">
             <span class="block uppercase text-purple-darker mb-2 font-bold">Settings</span>
             <div class="flex w-full items-center">
-                <label class="mb-2 flex-1" for="iterations">
-                    <span class="text-xs font-bold tracking-wide">ITERATIONS</span>
-                    <p class="block mt-1 text-sm">Increases the accuracy and time it takes to run</p>
+                <label class="flex-1" for="accuracy">
+                    <span class="text-sm font-bold tracking-wide">Accuracy</span>
+                    <!-- <p class="block mt-1 text-sm">Increases the value and time it takes to run</p> -->
                 </label>
                 <input 
                 type="number" 
-                min="10"
-                step="10"
-                @change="updateIterationValue(num)" 
-                class="appearance-none border-2 border-purple-dark w-20 ml-2 mt-2 font-bold bg-grey-lightest text-grey-darker px-2 rounded leading-tight h-10" 
-                name="iterations" 
+                min="1"
+                max="100"
+                step="1"
+                @change="updateAccuracyValue(num)" 
+                class="appearance-none border-2 border-purple-dark w-20 ml-2 mt-2 font-bold bg-grey-lightest text-grey-darker px-2 rounded leading-tight py-2" 
+                name="accuracy" 
                 v-model="num">
             </div>
         </div>
@@ -39,20 +40,20 @@
 export default {
     data(){
         return {
-            num: this.$store.state.iterations
+            num: this.$store.state.accuracy
         }
     },
     methods:{
         track () {
             this.$ga.page('/')
         },
-        updateIterationValue(iterations){
-            this.$store.state.iterations = iterations
+        updateAccuracyValue(accuracy){
+            this.$store.state.accuracy = accuracy
         }
     },
     computed: {
-        iterations() {
-            return this.$store.state.iterations
+        accuracy() {
+            return this.$store.state.accuracy
         }
     }
 }

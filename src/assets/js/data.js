@@ -27,30 +27,37 @@ const manchesterUnited = new Team('Manchester United', 1),
   westHamUnited = new Team('West Ham United', 20);
 
 function Match(homeTeam, awayTeam, result) {
+    // console.log("%c" + homeTeam.name + " " + "%c" + awayTeam.name, "color: #76F47E", "color: #FE461B", result);
+    // console.log(' ');
+
   return {
     input: [homeTeam.num, awayTeam.num],
     output: [result]
   }
 }
 function score(homeScore, awayScore) {
-    let fract = (homeScore - awayScore) * 0.3125;
+    
+    let fract = (homeScore - awayScore) * 0.15;
     let num = 0.5;
     if (homeScore > awayScore) {
-        // num = num - fract
-        // if (num < 0) {
-        //     return 0
-        // }
-        // return num
-        return 0
+        num = num - fract
+        if (num < 0) {
+            return 0
+        }
+        return parseFloat(num)
+
+        // return 0
     } else if (homeScore < awayScore) {
-        // num = num - fract;
-        // if (num > 1) {
-        //     return 1
-        // }
-        // return num
-        return 1
+        num = num - fract;
+        if (num > 1) {
+            return 1
+        }
+        return parseFloat(num)
+
+        // return 1
     }
-    return 0.5
+    
+    return parseFloat(0.5)
 }
 
 export const data = [
