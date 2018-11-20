@@ -37,24 +37,24 @@ function Match(homeTeam, awayTeam, result) {
 }
 function score(homeScore, awayScore) {
     
-    let fract = (homeScore - awayScore) * 0.15;
-    let num = 0.5;
+    // let fract = (homeScore - awayScore) * 0.15;
+    // let num = 0.5;
     if (homeScore > awayScore) {
-        num = num - fract
-        if (num < 0) {
-            return 0
-        }
-        return parseFloat(num)
+        // num = num - fract
+        // if (num < 0) {
+        //     return 0
+        // }
+        // return parseFloat(num)
 
-        // return 0
+        return 0
     } else if (homeScore < awayScore) {
-        num = num - fract;
-        if (num > 1) {
-            return 1
-        }
-        return parseFloat(num)
+        // num = num - fract;
+        // if (num > 1) {
+        //     return 1
+        // }
+        // return parseFloat(num)
 
-        // return 1
+        return 1
     }
     
     return parseFloat(0.5)

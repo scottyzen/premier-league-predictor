@@ -95,8 +95,6 @@ import '@/assets/styles/main.css';
 import brain from 'brain.js';
 import {data} from '@/assets/js/data.js';
 
-const net = new brain.recurrent.RNN();
-
 export default {
     name: 'home',
     data() {
@@ -137,6 +135,8 @@ export default {
     },
     methods:{
         runTest(){
+            let net = new brain.recurrent.RNN();
+            
             // Get the match data
             this.thinking = true;
             this.clearBorderStyle()

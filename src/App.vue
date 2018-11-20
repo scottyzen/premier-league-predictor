@@ -16,7 +16,7 @@
             <div class="flex w-full items-center">
                 <label class="flex-1" for="accuracy">
                     <span class="text-sm font-bold tracking-wide">Accuracy</span>
-                    <!-- <p class="block mt-1 text-sm">Increases the value and time it takes to run</p> -->
+                    <!-- <p class="block mt-1 text-sm">Between 5-10 </p> -->
                 </label>
                 <input 
                 type="number" 
