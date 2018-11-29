@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper px-4 pt-4 md:pt-16 h-screen shadow-lg" :class="{'move-right': menuIsOpen}">
-        <button class="hamburger hamburger--spin absolute pin-l pin-t m-3" :class="{'is-active': menuIsOpen}" type="button" @click="menuIsOpen = !menuIsOpen">
+        <button class="hamburger hamburger--spin absolute pin-l pin-t mt-2" :class="{'is-active': menuIsOpen}" type="button" @click="menuIsOpen = !menuIsOpen">
             <span class="hamburger-box">
                 <span class="hamburger-inner"></span>
             </span>
@@ -21,7 +21,7 @@
             </div>
         </transition>
 
-        <div class="max-w-lg m-auto">
+        <div class="max-w-lg m-auto mt-20">
             
             <!-- Premier League logo -->
             <!-- <div class="logo-box flex m-auto p-4  content-center items-center justify-center">
@@ -29,7 +29,7 @@
             </div> -->
             
 
-            <h1 class="mb-6 md:px-4 text-2xl sm:text-4xl fat-frank uppercase">{{selectedLeague.name}} Predictor.</h1>
+            <h1 class="mb-6 md:px-6 text-3xl sm:text-4xl fat-frank uppercase">{{selectedLeague.name}} Predictor.</h1>
 
             <h2 class="hidden md:block font-normal text-sm md:text-base max-w-xs md:max-w-sm leading-normal m-auto">Using <strong>match history</strong> along with <strong>machine learning</strong> to try to predict a matches outcome.</h2>
 
