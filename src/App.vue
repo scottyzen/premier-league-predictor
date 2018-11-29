@@ -13,10 +13,27 @@
 
         <div class="mt-12">
             <span class="block uppercase text-purple-darker mb-2 font-bold">Settings</span>
-            <div class="flex w-full items-center">
+
+
+            <div class="flex w-full items-center mb-2">
+                <label class="flex-1" for="league">
+                    <span class="text-sm font-bold tracking-wide">League</span>
+                </label>
+                <div class="relative">
+                    <select class="block appearance-none bg-grey-lightest border-2 border-purple-dark text-grey-darker font-bold py-1 px-2 ml-2 pr-8 rounded leading-tight" name="league" id="league" v-model="selectedLeague">
+                        <option v-for="leagues in availableLeagues" :key="leagues.length" :value="leagues">
+                            {{leagues.name}}
+                        </option>
+                    </select>
+                    <div class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex w-full items-center mb-2">
                 <label class="flex-1" for="accuracy">
                     <span class="text-sm font-bold tracking-wide">Accuracy</span>
-                    <!-- <p class="block mt-1 text-sm">Between 5-10 </p> -->
                 </label>
                 <input 
                 type="number" 
@@ -24,7 +41,7 @@
                 max="100"
                 step="1"
                 @change="updateAccuracyValue(num)" 
-                class="appearance-none border-2 border-purple-dark w-20 ml-2 mt-2 font-bold bg-grey-lightest text-grey-darker px-2 rounded leading-tight py-2" 
+                class="appearance-none border-2 border-purple-dark w-20 ml-2 mt-2 font-bold bg-grey-lightest text-grey-darker px-2 rounded leading-tight py-1" 
                 name="accuracy" 
                 v-model="num">
             </div>
@@ -54,6 +71,18 @@ export default {
     computed: {
         accuracy() {
             return this.$store.state.accuracy
+        },
+        selectedLeague: {
+            get () {
+                return this.$store.state.selectedLeague
+            },
+            set (value) {
+                this.$store.commit('updateLeague', value)
+                this.$store.dispatch('loadData')
+            }
+        },
+        availableLeagues(){
+            return this.$store.state.availableLeagues
         }
     }
 }

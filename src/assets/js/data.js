@@ -27,9 +27,6 @@ const manchesterUnited = new Team('Manchester United', 1),
   westHamUnited = new Team('West Ham United', 20);
 
 function Match(homeTeam, awayTeam, result) {
-    // console.log("%c" + homeTeam.name + " " + "%c" + awayTeam.name, "color: #76F47E", "color: #FE461B", result);
-    // console.log(' ');
-
   return {
     input: [homeTeam.num, awayTeam.num],
     output: [result]
@@ -170,5 +167,16 @@ export const data = [
     Match(wolverhampton, tottenhamHotspurs, score(2, 3)),
     Match(chelsea, crystalPalace, score(3, 1)),
     Match(manchesterCity, southamptom, score(6, 1)),
-    Match(huddersfield, fulham, score(1, 0))
+    Match(huddersfield, fulham, score(1, 0)),
+    Match(crystalPalace, tottenhamHotspurs, score(0, 1)),
+    Match(southamptom, watford, score(1, 1)),
+    Match(newcastleUnited, bournemouth, score(2, 1)),
+    Match(leicesterCity, burnley, score(0, 0)),
+    Match(huddersfield, westHamUnited, score(1, 1)),
+    Match(cardiff, brighton, score(2, 1)),
+    Match(manchesterCity, manchesterUnited, score(3, 1)),
+    Match(arsenal, wolverhampton, score(1, 1)),
+    Match(chelsea, everton, score(0, 0)),
+    Match(liverpool, fulham, score(2, 0))
+
 ];

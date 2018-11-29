@@ -24,12 +24,12 @@
         <div class="max-w-lg m-auto">
             
             <!-- Premier League logo -->
-            <div class="logo-box flex m-auto p-4  content-center items-center justify-center">
+            <!-- <div class="logo-box flex m-auto p-4  content-center items-center justify-center">
                 <img class="m-auto" :class="{'spinning': thinking}" :src="winningTeamLogo" alt="Premier League Logo">
-            </div>
+            </div> -->
             
 
-            <h1 class="mb-6 md:px-4 text-2xl sm:text-4xl fat-frank uppercase">Premier League Predictor.</h1>
+            <h1 class="mb-6 md:px-4 text-2xl sm:text-4xl fat-frank uppercase">{{selectedLeague.name}} Predictor.</h1>
 
             <h2 class="hidden md:block font-normal text-sm md:text-base max-w-xs md:max-w-sm leading-normal m-auto">Using <strong>match history</strong> along with <strong>machine learning</strong> to try to predict a matches outcome.</h2>
 
@@ -41,8 +41,8 @@
                     <label class="select__label md:mt-8" for="home-team">Home Team</label>
                     <div class="relative">
                         <select @change="onChange()" class="fade-border select" :class="{'select--yellow' : homeTeamWin}" v-model="homeSelected">
-                            <option v-for="team in teams" v-bind:value="team.number" :key="team.number">
-                                {{ team.name }}
+                            <option v-for="team in teams" v-bind:value="team.id" :key="team.id">
+                                {{ team.shortName }}
                             </option>
                         </select>
                         <div class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">
@@ -55,8 +55,8 @@
                     <label class="select__label md:mt-8" for="away-team">Away Team</label>
                     <div class="relative">
                         <select @change="onChange()" class="fade-border select" :class="{'select--yellow' : awayTeamWin}" v-model="awaySelected">
-                            <option v-for="team in teams" v-bind:value="team.number" :key="team.number">
-                                {{ team.name }}
+                            <option v-for="team in teams" v-bind:value="team.id" :key="team.id">
+                                {{ team.shortName }}
                             </option>
                         </select>
                         <div class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker">
@@ -84,7 +84,6 @@
                 <p v-if="awayTeamWin">We are going for the away team</p>
             </div>
         </div>
-
         </div>
     </div>
 </template>
@@ -93,14 +92,13 @@
 /* eslint-disable */
 import '@/assets/styles/main.css';
 import brain from 'brain.js';
-import {data} from '@/assets/js/data.js';
 
 export default {
     name: 'home',
     data() {
         return {
-            homeSelected: 6,
-            awaySelected: 2,
+            // homeSelected: this.$store.state.homeSelected,
+            // awaySelected: this.$store.state.awaySelected,
             allowRunTest: true,
             homeTeamWin: false,
             draw: false,
@@ -109,73 +107,56 @@ export default {
             result: null,
             menuIsOpen : false,
             thinking: false,
-            teams: [
-                { name: 'Arsenal', number: 15 },
-                { name: 'Bournemouth', number: 11 },
-                { name: 'Brighton', number: 6 },
-                { name: 'Burnley', number: 18 },
-                { name: 'Cardiff', number: 12 },
-                { name: 'Chelsea', number: 8 },
-                { name: 'Crystal Palace', number: 10 },
-                { name: 'Everton', number: 4 },
-                { name: 'Fulham', number: 9 },
-                { name: 'Huddersfield', number: 7 },
-                { name: 'Leicester City', number: 2 },
-                { name: 'Liverpool', number: 19 },
-                { name: 'Manchester City', number: 16 },
-                { name: 'Manchester United', number: 1 },
-                { name: 'Newcastle United', number: 13 },
-                { name: 'Southampton', number: 17 },
-                { name: 'Tottenham Hotspurs', number: 14 },
-                { name: 'Watford', number: 5 },
-                { name: 'West Ham United', number: 20 },
-                { name: 'Wolverhampton', number: 3 }
-            ]
         }
     },
     methods:{
         runTest(){
+            // this.trainingData = null;
             let net = new brain.recurrent.RNN();
-            
+
             // Get the match data
             this.thinking = true;
             this.clearBorderStyle()
+            
+            var avgArray = []; // Array of results
 
-            // Run the two teams agains each other
-            var avgArray = [];
-            var getAvg = (times) => {
+            var populateAvgArray = (times) => {
 
-                for (let index = 0; index < times; index++) {
-                    net.train(data, { iterations: 10 } );
-                    var newResult = parseFloat(net.run([this.homeSelected, this.awaySelected]));
+                for (let i = 0; i < times; i++) {
+
+                    // Train data with options
+                    net.train(this.trainingData, {
+                         iterations: 50 
+                    } );
+
+                    // Run the two teams agains each other
+                    var res = net.run([this.homeSelected, this.awaySelected]);
                     
-                    if (newResult < 0) { newResult = 0 }
-                    if (newResult > 1) { newResult = 1 }
+                    // Make sure result is between 0 - 1
+                    if (res <= 0) { res = 0 }
+                    if (res >= 1) { res = 1 }
 
-                    if (!isNaN(newResult)) {
-                        avgArray = [...avgArray, newResult]
+                    // Check result is number before pushing to array
+                    if (!isNaN(res)) {
+                        avgArray = [...avgArray, parseFloat(res)]
                     }
                 }
 
             }
 
-            getAvg(this.$store.state.accuracy);
-            const average = arr => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length;
+            populateAvgArray(this.$store.state.accuracy);
 
+            // Get average of an Array of numbers
+            const getAverageOf = arr => arr.reduce( ( p, c ) => p + c, 0 ) / arr.length       
+            this.result = getAverageOf( avgArray )
             console.log(avgArray);
-            
-            this.result = average( avgArray )
             console.log(this.result);
             
 
             // Set the winning team to true
-            if(this.result == 0.5 ){
-                this.draw = true;
-            }else if (this.result < 0.5) {
-                this.homeTeamWin = true;
-            }else {
-                this.awayTeamWin = true;
-            }
+            this.homeTeamWin = (this.result < 0.5 ) ? true : false;
+            this.draw = (this.result == 0.5 ) ? true : false;         
+            this.awayTeamWin = (this.result > 0.5 ) ? true : false;
 
             // Hide the working message and make the predit button clickable
             this.hideMessage();
@@ -183,6 +164,12 @@ export default {
                 this.thinking = false;
             }, 300);
             
+        },
+        convertToTrainingData(homeTeam, awayTeam, result) {
+            return {
+                input: [homeTeam.id, awayTeam.id],
+                output: [result]
+            }
         },
         showMessage(callback, callback2){
             this.menuIsOpen= false;
@@ -208,20 +195,59 @@ export default {
             // Check if selected teams are the same
             this.allowRunTest = (this.homeSelected == this.awaySelected) ? false: true;
             this.clearBorderStyle();            
+        },
+        score(homeScore, awayScore) {
+            if (homeScore > awayScore) {
+                return 0
+            } else if (homeScore < awayScore) {
+                return 1
+            }
+            return parseFloat(0.5)
         }
     },
     computed: {
         winningTeamLogo () {
             
-            if (this.homeTeamWin) {
-                return require('@/assets/crests/'+this.homeSelected+'.png')
-            }
-            if (this.awayTeamWin) {
-                return require('@/assets/crests/'+this.awaySelected+'.png')
-            }
+            if (this.homeTeamWin) {return require('@/assets/crests/'+this.homeSelected+'.png')}
+            if (this.awayTeamWin) {return require('@/assets/crests/'+this.awaySelected+'.png')}
             return require('../assets/Premier-League-logo.png');
-
+        },
+        matchHistory(){
+            return this.$store.state.matchHistory;
+        },
+        teams(){
+            return this.$store.state.teams;
+        },
+        trainingData(){
+            var myArray = [];
+            this.$store.state.matchHistory.forEach(match => {
+                let newArrayItem = this.convertToTrainingData(match.homeTeam, match.awayTeam, this.score(match.score.fullTime.homeTeam ,match.score.fullTime.awayTeam ))
+                myArray.push(newArrayItem)
+            });
+            return myArray;
+        },
+        homeSelected: {
+            get () {
+                return this.$store.state.homeSelected
+            },
+            set (value) {
+                this.$store.commit('updateHomeSelected', value)
+            }
+        },
+        awaySelected: {
+            get () {
+                return this.$store.state.awaySelected
+            },
+            set (value) {
+                this.$store.commit('updateAwaySelected', value)
+            }
+        },
+        selectedLeague() {
+            return this.$store.state.selectedLeague
         }
+    },
+    created: function () {
+        this.$store.dispatch('loadData')
     }
 };
 </script>
