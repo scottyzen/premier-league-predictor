@@ -22,12 +22,6 @@
         </transition>
 
         <div class="max-w-lg m-auto mt-20">
-            
-            <!-- Premier League logo -->
-            <!-- <div class="logo-box flex m-auto p-4  content-center items-center justify-center">
-                <img class="m-auto" :class="{'spinning': thinking}" :src="winningTeamLogo" alt="Premier League Logo">
-            </div> -->
-            
 
             <h1 class="mb-6 md:px-6 text-3xl sm:text-4xl fat-frank uppercase">{{selectedLeague.name}} Predictor.</h1>
 
@@ -126,7 +120,7 @@ export default {
 
                     // Train data with options
                     net.train(this.trainingData, {
-                         iterations: 20 
+                         iterations: 50 
                     } );
 
                     // Run the two teams agains each other
@@ -205,6 +199,9 @@ export default {
             return parseFloat(0.5)
         }
     },
+    beforeCreate: function () {
+      this.$store.commit('updateLeague', { id: 'CL',     name: 'Champions League'})
+    },
     computed: {
         winningTeamLogo () {
             
@@ -251,95 +248,3 @@ export default {
     }
 };
 </script>
-
-<style>
-
-.wrapper {
-	transform: none;
-	transition: all 300ms ease-in-out;
-	will-change: transform;
-}
-
-.move-right {
-	transform: translateX(300px);
-}
-
-html,
-body {
-	margin: 0;
-	height: 100vh;
-	overflow: hidden;
-	border-top: 2px solid #9662da;
-}
-.fade {
-	transition: all 300ms ease-in-out;
-}
-.fade-border {
-	transition: border 300ms ease-in-out;
-	border-width: 2px;
-}
-.alert {
-	padding-right: 100px;
-	right: -20px;
-	transition: all 300ms cubic-bezier(0.44, -0.03, 0.04, 1.25);
-}
-.hide_alert {
-	transform: translateX(100%);
-}
-.slide-leave-active,
-.slide-enter-active {
-	transition: transform 300ms cubic-bezier(0.44, -0.03, 0.04, 1.25);
-}
-.slide-enter {
-	transform: translate(100%, 0);
-}
-.slide-leave-to {
-	transform: translate(100%, 0);
-}
-
-.settings {
-	box-shadow: 0 25px 0 #9462dd;
-	transition: all 250ms cubic-bezier(0.44, -0.03, 0.04, 1.25);
-}
-.settings-toggel-button {
-	top: -40px;
-	right: 10px;
-	height: 40px;
-	padding: 6px 12px;
-}
-
-.settings-closed {
-	transform: translateY(100%);
-}
-
-*,
-button,
-select {
-	outline: none !important;
-}
-
-/* LOGO */
-
-.logo-box {
-	width: 200px;
-	height: 240px;
-}
-@media only screen and (max-width: 576px) {
-	.logo-box {
-		width: 160px;
-		height: 180px;
-	}
-}
-@keyframes spinning {
-	from {
-		transform: rotateY(0deg);
-	}
-	to {
-		transform: rotateY(360deg);
-	}
-}
-.spinning {
-	animation: spinning 300ms linear infinite;
-}
-</style>
-

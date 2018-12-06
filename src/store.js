@@ -15,7 +15,7 @@ let config = {
 
 export default new Vuex.Store({
   state: {
-    accuracy: 5,
+    accuracy: 8,
     selectedLeague: { id: 'PL', name: 'Premier League' },
     matchHistory: [],
     teams: [],
@@ -50,20 +50,20 @@ export default new Vuex.Store({
   actions: {
     loadData({ commit }){
 
-        axios.get(`http://api.football-data.org/v2/competitions/${this.state.selectedLeague.id}/matches?status=SCHEDULED&season=2018`, config).then((res) => {
+        axios.get(`https://api.football-data.org/v2/competitions/${this.state.selectedLeague.id}/matches?status=SCHEDULED&season=2018`, config).then((res) => {
             // console.log(res.data.matches[0].awayTeam.id)
             commit('updateHomeSelected', res.data.matches[0].homeTeam.id)
             commit('updateAwaySelected', res.data.matches[0].awayTeam.id)
         })
 
-      axios.get(`http://api.football-data.org/v2/competitions/${this.state.selectedLeague.id}/matches?status=FINISHED&season=2018`, config).then((res) => {
+      axios.get(`https://api.football-data.org/v2/competitions/${this.state.selectedLeague.id}/matches?status=FINISHED&season=2018`, config).then((res) => {
         // console.log(res.data)
         commit('updateMatchHistory', res.data.matches)
       })
 
       
 
-      axios.get(`http://api.football-data.org/v2/competitions/${this.state.selectedLeague.id}/teams`, config).then((res) => {
+      axios.get(`https://api.football-data.org/v2/competitions/${this.state.selectedLeague.id}/teams`, config).then((res) => {
         // console.log(res.data.teams)
         commit('getTeamsList', res.data.teams)
       })

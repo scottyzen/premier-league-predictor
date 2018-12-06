@@ -2,7 +2,8 @@
   <div id="app" class="relative min-h-screen overflow-hidden bg-purple">
     <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/premierleague">Premier League</router-link> |
+      <router-link to="/championsleague">Champions League</router-link>
     </div> -->
     <div class="h-screen absolute pin-t pin-l py-8 text-purple-lightest text-left" style="max-width: 280px; padding-left: 20px">
 

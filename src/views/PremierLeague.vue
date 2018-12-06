@@ -24,9 +24,9 @@
         <div class="max-w-lg m-auto mt-20">
             
             <!-- Premier League logo -->
-            <!-- <div class="logo-box flex m-auto p-4  content-center items-center justify-center">
+            <div class="logo-box flex m-auto p-4  content-center items-center justify-center">
                 <img class="m-auto" :class="{'spinning': thinking}" :src="winningTeamLogo" alt="Premier League Logo">
-            </div> -->
+            </div>
             
 
             <h1 class="mb-6 md:px-6 text-3xl sm:text-4xl fat-frank uppercase">{{selectedLeague.name}} Predictor.</h1>
@@ -126,7 +126,7 @@ export default {
 
                     // Train data with options
                     net.train(this.trainingData, {
-                         iterations: 20 
+                         iterations: 50 
                     } );
 
                     // Run the two teams agains each other
@@ -204,6 +204,9 @@ export default {
             }
             return parseFloat(0.5)
         }
+    },
+    beforeCreate: function () {
+      this.$store.commit('updateLeague', { id: 'PL',     name: 'Premier League'})
     },
     computed: {
         winningTeamLogo () {
