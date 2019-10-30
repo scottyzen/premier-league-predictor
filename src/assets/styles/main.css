@@ -9,20 +9,14 @@
 
 /* Select */
 .select {
-    @apply block font-bold appearance-none w-full bg-white border-2 border-grey-light text-grey-darker py-3 px-4 pr-8 rounded leading-tight;
+  @apply block font-semibold appearance-none w-full bg-white border-2 border-grey-light text-grey-darker py-3 pt-4 px-4 pr-8 rounded leading-tight text-lg;
 }
 
-.select--yellow{
-    @apply border-yellow-light text-yellow bg-yellow-lightest;
+.select--yellow {
+  @apply border-yellow-light text-yellow bg-yellow-lightest;
 }
 
 /* Select lable */
 .select__label {
-  @apply text-left block uppercase tracking-wide text-purple text-xs font-extrabold px-4 border-l-2 border-grey-lightest mt-4 mb-2;
+  @apply text-left block uppercase tracking-wide text-indigo text-xs font-extrabold px-4 border-l-2 border-grey-lightest mt-4 mb-2;
 }
-
-
-
-
-
-
