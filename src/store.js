@@ -52,11 +52,11 @@ export default new Vuex.Store({
         .get(
           `https://api.football-data.org/v2/competitions/${
             this.state.selectedLeague.id
-          }/matches?status=SCHEDULED&season=2019`,
+          }/matches?status=SCHEDULED&season=${new Date().getFullYear()}`,
           config
         )
         .then(res => {
-          // console.log(res.data.matches[0].awayTeam.id)
+          // console.log(res.data.matches[0].awayTeam.id);
           commit("updateHomeSelected", res.data.matches[0].homeTeam.id);
           commit("updateAwaySelected", res.data.matches[0].awayTeam.id);
         });

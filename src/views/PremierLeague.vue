@@ -152,8 +152,8 @@ export default {
   name: "home",
   data() {
     return {
-      // homeSelected: this.$store.state.homeSelected,
-      // awaySelected: this.$store.state.awaySelected,
+      homeSelected: this.$store.state.homeSelected,
+      awaySelected: this.$store.state.awaySelected,
       allowRunTest: true,
       homeTeamWin: false,
       draw: false,
@@ -161,7 +161,7 @@ export default {
       showAlertMessage: false,
       result: null,
       menuIsOpen: false,
-      thinking: false
+      thinking: false,
     };
   },
   methods: {
@@ -175,11 +175,11 @@ export default {
 
       var avgArray = []; // Array of results
 
-      var populateAvgArray = times => {
+      var populateAvgArray = (times) => {
         for (let i = 0; i < times; i++) {
           // Train data with options
           net.train(this.trainingData, {
-            iterations: 50
+            iterations: 50,
           });
 
           // Run the two teams agains each other
@@ -203,7 +203,7 @@ export default {
       populateAvgArray(this.$store.state.accuracy);
 
       // Get average of an Array of numbers
-      const getAverageOf = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
+      const getAverageOf = (arr) => arr.reduce((p, c) => p + c, 0) / arr.length;
       this.result = getAverageOf(avgArray);
       console.log(avgArray);
       console.log(this.result);
@@ -222,7 +222,7 @@ export default {
     convertToTrainingData(homeTeam, awayTeam, result) {
       return {
         input: [homeTeam.id, awayTeam.id],
-        output: [result]
+        output: [result],
       };
     },
     showMessage(callback, callback2) {
@@ -257,7 +257,7 @@ export default {
         return 1;
       }
       return parseFloat(0.5);
-    }
+    },
   },
   beforeCreate: function() {
     this.$store.commit("updateLeague", { id: "PL", name: "Premier League" });
@@ -280,7 +280,7 @@ export default {
     },
     trainingData() {
       var myArray = [];
-      this.$store.state.matchHistory.forEach(match => {
+      this.$store.state.matchHistory.forEach((match) => {
         let newArrayItem = this.convertToTrainingData(
           match.homeTeam,
           match.awayTeam,
@@ -299,7 +299,7 @@ export default {
       },
       set(value) {
         this.$store.commit("updateHomeSelected", value);
-      }
+      },
     },
     awaySelected: {
       get() {
@@ -307,15 +307,15 @@ export default {
       },
       set(value) {
         this.$store.commit("updateAwaySelected", value);
-      }
+      },
     },
     selectedLeague() {
       return this.$store.state.selectedLeague;
-    }
+    },
   },
   created: function() {
     this.$store.dispatch("loadData");
-  }
+  },
 };
 </script>
 
@@ -408,4 +408,3 @@ select {
   animation: spinning 300ms linear infinite;
 }
 </style>
-
