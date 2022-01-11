@@ -11,11 +11,7 @@ const baseUrl = 'https://api.football-data.org/v2';
 // let URL = 'https://api.football-data.org/v2/competitions/BL1/matches?status=FINISHED';
 // let teamURL = 'https://api.football-data.org/v2/competitions/BL1/teams'
 let headers = { 
-  "X-Auth-Token": "20e725054df046f58355a43107606116",
-  // "Access-Control-Allow-Origin": "*",
-  // "Access-Control-Allow-Credentials": "true",
-  // "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
-  // "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
+  "X-Auth-Token": "20e725054df046f58355a43107606116"
 };
 
 
@@ -57,7 +53,7 @@ export default new Vuex.Store({
   actions: {
     loadData({ commit }) {
 
-      axios.get( `${baseUrl}/competitions/${ this.state.selectedLeague.id }/matches?status=SCHEDULED&season=${thisYear}`, {headers} ).then(res => {
+      axios.get( `${baseUrl}/competitions/${ this.state.selectedLeague.id }/matches?status=SCHEDULED`, {headers} ).then(res => {
         commit("updateHomeSelected", res.data.matches[0].homeTeam.id);
         commit("updateAwaySelected", res.data.matches[0].awayTeam.id);
       });
