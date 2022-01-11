@@ -11,7 +11,9 @@ const baseUrl = 'https://api.football-data.org/v2';
 // let URL = 'https://api.football-data.org/v2/competitions/BL1/matches?status=FINISHED';
 // let teamURL = 'https://api.football-data.org/v2/competitions/BL1/teams'
 let headers = { 
-  "X-Auth-Tokeng": "20e725054df046f58355a43107606116"
+  "X-Auth-Token": "20e725054df046f58355a43107606116",
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
 };
 
 export default new Vuex.Store({
