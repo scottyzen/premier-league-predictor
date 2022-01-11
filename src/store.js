@@ -4,11 +4,14 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-// let URL = 'http://api.football-data.org/v2/competitions/BL1/matches?status=FINISHED&season=2018';
-// let teamURL = 'http://api.football-data.org/v2/competitions/BL1/teams'
+const thisYear = new Date().getFullYear();
+const lastYear = thisYear - 1;
+
+// let URL = 'https://api.football-data.org/v2/competitions/BL1/matches?status=FINISHED&season=2018';
+// let teamURL = 'https://api.football-data.org/v2/competitions/BL1/teams'
 let config = {
   headers: {
-    "X-Auth-Token": "20e725054df046f58355a43107606116"
+    "X-Auth-Token": process.env.TOKEN
   }
 };
 
@@ -52,7 +55,7 @@ export default new Vuex.Store({
         .get(
           `https://api.football-data.org/v2/competitions/${
             this.state.selectedLeague.id
-          }/matches?status=SCHEDULED&season=${new Date().getFullYear()}`,
+          }/matches?status=SCHEDULED&season=${year}`,
           config
         )
         .then(res => {
@@ -65,7 +68,7 @@ export default new Vuex.Store({
         .get(
           `https://api.football-data.org/v2/competitions/${
             this.state.selectedLeague.id
-          }/matches?status=FINISHED&season=2019`,
+          }/matches?status=FINISHED&season=${lastYear}`,
           config
         )
         .then(res => {
