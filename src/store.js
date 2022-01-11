@@ -12,10 +12,10 @@ const baseUrl = 'https://api.football-data.org/v2';
 // let teamURL = 'https://api.football-data.org/v2/competitions/BL1/teams'
 let headers = { 
   "X-Auth-Token": "20e725054df046f58355a43107606116",
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Credentials": "true",
-  "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
-  "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
+  // "Access-Control-Allow-Origin": "*",
+  // "Access-Control-Allow-Credentials": "true",
+  // "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
+  // "Access-Control-Allow-Headers": "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
 };
 
 
