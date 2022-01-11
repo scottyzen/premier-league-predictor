@@ -6,13 +6,12 @@ Vue.use(Vuex);
 
 const thisYear = new Date().getFullYear();
 const lastYear = thisYear - 1;
+const baseUrl = 'https://api.football-data.org/v2';
 
-// let URL = 'https://api.football-data.org/v2/competitions/BL1/matches?status=FINISHED&season=2018';
+// let URL = 'https://api.football-data.org/v2/competitions/BL1/matches?status=FINISHED';
 // let teamURL = 'https://api.football-data.org/v2/competitions/BL1/teams'
-let config = {
-  headers: {
-    "X-Auth-Token": process.env.TOKEN
-  }
+let headers = { 
+  "X-Auth-Tokeng": "20e725054df046f58355a43107606116"
 };
 
 export default new Vuex.Store({
@@ -51,42 +50,20 @@ export default new Vuex.Store({
   },
   actions: {
     loadData({ commit }) {
-      axios
-        .get(
-          `https://api.football-data.org/v2/competitions/${
-            this.state.selectedLeague.id
-          }/matches?status=SCHEDULED&season=${year}`,
-          config
-        )
-        .then(res => {
-          // console.log(res.data.matches[0].awayTeam.id);
-          commit("updateHomeSelected", res.data.matches[0].homeTeam.id);
-          commit("updateAwaySelected", res.data.matches[0].awayTeam.id);
-        });
 
-      axios
-        .get(
-          `https://api.football-data.org/v2/competitions/${
-            this.state.selectedLeague.id
-          }/matches?status=FINISHED&season=${lastYear}`,
-          config
-        )
-        .then(res => {
-          // console.log(res.data)
-          commit("updateMatchHistory", res.data.matches);
-        });
+      axios.get( `${baseUrl}/competitions/${ this.state.selectedLeague.id }/matches?status=SCHEDULED&season=${thisYear}`, {headers} ).then(res => {
+        commit("updateHomeSelected", res.data.matches[0].homeTeam.id);
+        commit("updateAwaySelected", res.data.matches[0].awayTeam.id);
+      });
 
-      axios
-        .get(
-          `https://api.football-data.org/v2/competitions/${
-            this.state.selectedLeague.id
-          }/teams`,
-          config
-        )
-        .then(res => {
-          // console.log(res.data.teams)
-          commit("getTeamsList", res.data.teams);
-        });
+      axios.get( `${baseUrl}/competitions/${ this.state.selectedLeague.id }/matches?status=FINISHED&season=${lastYear}`, {headers} ).then(res => {
+        commit("updateMatchHistory", res.data.matches);
+      });
+
+      axios.get( `${baseUrl}/competitions/${ this.state.selectedLeague.id }/teams`, {headers} ).then(res => {
+        commit("getTeamsList", res.data.teams);
+      });
+
     }
   }
 });
