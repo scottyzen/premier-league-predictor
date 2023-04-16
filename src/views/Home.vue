@@ -1,7 +1,10 @@
 <template>
-  <div class="wrapper px-4 pt-4 md:pt-10 h-screen shadow-lg" :class="{'move-right': menuIsOpen}">
+  <div
+    class="h-screen px-4 pt-4 shadow-lg wrapper md:pt-10"
+    :class="{ 'move-right': menuIsOpen }"
+  >
     <!-- <button
-      class="hamburger hamburger--spin absolute pin-l pin-t mt-2"
+      class="absolute mt-2 hamburger hamburger--spin pin-l pin-t"
       :class="{'is-active': menuIsOpen}"
       type="button"
       @click="menuIsOpen = !menuIsOpen"
@@ -14,7 +17,7 @@
     <!-- ALERT Message -->
     <transition name="slide">
       <div
-        class="alert fade absolute pin-t bg-indigo-lightest border-l-4 border-indigo rounded-b text-left text-indigo-darkest px-6 pt-5 pb-3 my-4 shadow-md"
+        class="absolute px-6 pt-5 pb-3 my-4 text-left text-indigo-900 bg-indigo-100 border-l-4 border-indigo-500 rounded-b shadow-md alert fade pin-t"
         v-show="showAlertMessage"
         role="alert"
       >
@@ -30,23 +33,33 @@
       </div>
     </transition>
 
-    <div class="max-w-lg m-auto mt-6">
+    <div class="max-w-2xl m-auto mt-6">
       <!-- Premier League logo -->
-      <div class="logo-box flex m-auto p-4 content-center items-center justify-center">
+      <div
+        class="flex items-center content-center justify-center p-4 m-auto logo-box"
+      >
         <img
           class="m-auto"
-          :class="{'spinning': thinking}"
-          :src="winningTeamLogo"
+          v-if="winningTeamLogo"
+          :class="{ spinning: thinking }"
+          :src="`../assets/crests/${winningTeamLogo}.png`"
+          alt="Premier League Logo"
+        />
+        <img
+          class="m-auto"
+          v-else
+          :class="{ spinning: thinking }"
+          src="../assets/Premier-League-logo.png"
           alt="Premier League Logo"
         />
       </div>
 
-      <h1
-        class="mb-4 md:px-6 text-3xl sm:text-4xl fat-frank uppercase"
-      >{{selectedLeague.name}} Predictor.</h1>
+      <h1 class="mb-4 text-3xl uppercase md:px-6 sm:text-4xl fat-frank">
+        {{ selectedLeague.name }} Predictor.
+      </h1>
 
       <h2
-        class="hidden md:block font-normal text-sm md:text-base max-w-xs md:max-w-sm leading-normal m-auto"
+        class="hidden m-auto text-sm font-normal leading-normal md:block md:text-base md:max-w-sm"
       >
         Using
         <strong>match history</strong> along with
@@ -55,67 +68,49 @@
 
       <div class="flex flex-wrap items-end pt-12">
         <!-- Select's -->
-        <div class="w-full md:w-4/5 flex">
+        <div class="flex w-full md:w-4/5">
           <!-- Home select -->
-          <div class="w-full sm:w-1/2 mr-4 lg:mr-6">
-            <label class="select__label md:mt-8" for="home-team">Home Team</label>
+          <div class="w-full mr-4 sm:w-1/2 lg:mr-6">
+            <label class="select__label md:mt-8" for="home-team"
+              >Home Team</label
+            >
             <div class="relative">
               <select
                 @change="onChange()"
                 class="fade-border select"
-                :class="{'select--yellow' : homeTeamWin}"
+                :class="{ 'select--yellow': homeTeamWin }"
                 v-model="homeSelected"
               >
                 <option
                   v-for="team in teams"
                   v-bind:value="team.id"
                   :key="team.id"
-                >{{ team.shortName }}</option>
-              </select>
-              <div
-                class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker"
-              >
-                <svg
-                  class="fill-current h-4 w-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
                 >
-                  <path
-                    d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-                  />
-                </svg>
-              </div>
+                  {{ team.shortName }}
+                </option>
+              </select>
             </div>
           </div>
           <!-- Away select -->
-          <div class="w-full sm:w-1/2 mr-0 md:mr-4 lg:mr-6">
-            <label class="select__label md:mt-8" for="away-team">Away Team</label>
+          <div class="w-full mr-0 sm:w-1/2 md:mr-4 lg:mr-6">
+            <label class="select__label md:mt-8" for="away-team"
+              >Away Team</label
+            >
             <div class="relative">
               <select
                 @change="onChange()"
                 class="fade-border select"
-                :class="{'select--yellow' : awayTeamWin}"
+                :class="{ 'select--yellow': awayTeamWin }"
                 v-model="awaySelected"
               >
                 <option
                   v-for="team in teams"
                   v-bind:value="team.id"
                   :key="team.id"
-                >{{ team.shortName }}</option>
-              </select>
-              <div
-                class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker"
-              >
-                <svg
-                  class="fill-current h-4 w-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
                 >
-                  <path
-                    d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-                  />
-                </svg>
-              </div>
+                  {{ team.shortName }}
+                </option>
+              </select>
             </div>
           </div>
         </div>
@@ -125,14 +120,19 @@
           <button
             @click="showMessage(runTest, clearBorderStyle)"
             :disabled="!allowRunTest"
-            class="fade btn"
-            :class="{'bg-indigo hover:bg-indigo-dark ': allowRunTest , 'cursor-pointer bg-grey cursor-not-allowed': !allowRunTest}"
+            class="fade btn whitespace-nowrap"
+            :class="{
+              'bg-indigo-500 hover:bg-indigo-700 cursor-pointer': allowRunTest,
+              ' bg-grey-400 cursor-not-allowed': !allowRunTest,
+            }"
             type="button"
-          >Predict Match</button>
+          >
+            Predict Match
+          </button>
         </div>
       </div>
 
-      <div class="w-full m-auto text-center max-w-lg mt-8 md:mt-12">
+      <div class="w-full max-w-lg m-auto mt-8 text-center md:mt-12">
         <div class="w-full mt-8 text-lg md:text-3xl">
           <p v-if="homeTeamWin">We are going for the home team</p>
           <p v-if="draw">We are going for a Draw on this one.</p>
@@ -144,9 +144,8 @@
 </template>
 
 <script>
-/* eslint-disable */
-import "@/assets/styles/main.css";
-import brain from "brain.js";
+// import "@/assets/styles/main.css";
+// import brain from "brain.js";
 
 export default {
   name: "home",
@@ -161,7 +160,7 @@ export default {
       showAlertMessage: false,
       result: null,
       menuIsOpen: false,
-      thinking: false
+      thinking: false,
     };
   },
   methods: {
@@ -175,11 +174,11 @@ export default {
 
       var avgArray = []; // Array of results
 
-      var populateAvgArray = times => {
+      var populateAvgArray = (times) => {
         for (let i = 0; i < times; i++) {
           // Train data with options
           net.train(this.trainingData, {
-            iterations: 20
+            iterations: 20,
           });
 
           // Run the two teams agains each other
@@ -203,7 +202,7 @@ export default {
       populateAvgArray(this.$store.state.accuracy);
 
       // Get average of an Array of numbers
-      const getAverageOf = arr => arr.reduce((p, c) => p + c, 0) / arr.length;
+      const getAverageOf = (arr) => arr.reduce((p, c) => p + c, 0) / arr.length;
       this.result = getAverageOf(avgArray);
       console.log(avgArray);
       console.log(this.result);
@@ -222,7 +221,7 @@ export default {
     convertToTrainingData(homeTeam, awayTeam, result) {
       return {
         input: [homeTeam.id, awayTeam.id],
-        output: [result]
+        output: [result],
       };
     },
     showMessage(callback, callback2) {
@@ -257,17 +256,17 @@ export default {
         return 1;
       }
       return parseFloat(0.5);
-    }
+    },
   },
   computed: {
     winningTeamLogo() {
       if (this.homeTeamWin) {
-        return require("@/assets/crests/" + this.homeSelected + ".png");
+        return this.homeSelected;
       }
       if (this.awayTeamWin) {
-        return require("@/assets/crests/" + this.awaySelected + ".png");
+        return this.awaySelected;
       }
-      return require("../assets/Premier-League-logo.png");
+      return null;
     },
     matchHistory() {
       return this.$store.state.matchHistory;
@@ -277,7 +276,7 @@ export default {
     },
     trainingData() {
       var myArray = [];
-      this.$store.state.matchHistory.forEach(match => {
+      this.$store.state.matchHistory.forEach((match) => {
         let newArrayItem = this.convertToTrainingData(
           match.homeTeam,
           match.awayTeam,
@@ -296,7 +295,7 @@ export default {
       },
       set(value) {
         this.$store.commit("updateHomeSelected", value);
-      }
+      },
     },
     awaySelected: {
       get() {
@@ -304,15 +303,15 @@ export default {
       },
       set(value) {
         this.$store.commit("updateAwaySelected", value);
-      }
+      },
     },
     selectedLeague() {
       return this.$store.state.selectedLeague;
-    }
+    },
   },
-  created: function() {
+  mounted() {
     this.$store.dispatch("loadData");
-  }
+  },
 };
 </script>
 
@@ -405,4 +404,3 @@ select {
   animation: spinning 300ms linear infinite;
 }
 </style>
-

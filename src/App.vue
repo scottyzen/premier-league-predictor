@@ -1,29 +1,33 @@
 <template>
-  <div id="app" class="relative min-h-screen overflow-hidden bg-indigo">
+  <div id="app" class="relative min-h-screen overflow-hidden bg-indigo-500">
     <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/premierleague">Premier League</router-link> |
       <router-link to="/championsleague">Champions League</router-link>
     </div>-->
     <div
-      class="h-screen absolute pin-t pin-l py-8 text-indigo-lightest text-left"
+      class="absolute h-screen py-8 text-left text-indigo-100 pin-t pin-l"
       style="max-width: 280px; padding-left: 20px"
     >
-      <span class="block uppercase text-indigo-darker mb-2 font-bold">About</span>
-      <p
-        class="text-sm"
-      >Powered by BrainJS, Premier League Predictor uses match history from this year's Premier League, along with machine learning to try to predict the outcome of a soccer match.</p>
+      <span class="block mb-2 font-bold text-indigo-800 uppercase">About</span>
+      <p class="text-sm">
+        Powered by BrainJS, Premier League Predictor uses match history from
+        this year's Premier League, along with machine learning to try to
+        predict the outcome of a soccer match.
+      </p>
 
       <div class="mt-12">
-        <span class="block uppercase text-indigo-darker mb-2 font-bold">Settings</span>
+        <span class="block mb-2 font-bold text-indigo-800 uppercase"
+          >Settings</span
+        >
 
-        <div class="flex w-full items-center mb-2">
+        <div class="flex items-center w-full mb-2">
           <label class="flex-1" for="league">
             <span class="text-sm font-bold tracking-wide">League</span>
           </label>
           <div class="relative">
             <select
-              class="block appearance-none bg-grey-lightest border-2 border-indigo-dark text-grey-darker font-bold py-1 px-2 ml-2 pr-8 rounded leading-tight"
+              class="block px-2 py-1 pr-8 ml-2 font-bold leading-tight text-gray-900 border-2 border-indigo-800 rounded appearance-none bg-gray-lightest"
               name="league"
               id="league"
               v-model="selectedLeague"
@@ -32,13 +36,15 @@
                 v-for="leagues in availableLeagues"
                 :key="leagues.length"
                 :value="leagues"
-              >{{leagues.name}}</option>
+              >
+                {{ leagues.name }}
+              </option>
             </select>
             <div
-              class="pointer-events-none absolute pin-y pin-r flex items-center px-2 text-grey-darker"
+              class="absolute flex items-center px-2 text-gray-900 pointer-events-none pin-y pin-r"
             >
               <svg
-                class="fill-current h-4 w-4"
+                class="w-4 h-4 fill-current"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
               >
@@ -50,7 +56,7 @@
           </div>
         </div>
 
-        <div class="flex w-full items-center mb-2">
+        <div class="flex items-center w-full mb-2">
           <label class="flex-1" for="accuracy">
             <span class="text-sm font-bold tracking-wide">Accuracy</span>
           </label>
@@ -60,7 +66,7 @@
             max="100"
             step="1"
             @change="updateAccuracyValue(num)"
-            class="appearance-none border-2 border-indigo-dark w-20 ml-2 mt-2 font-bold bg-grey-lightest text-grey-darker px-2 rounded leading-tight py-1"
+            class="w-20 px-2 py-1 mt-2 ml-2 font-bold leading-tight text-gray-900 bg-gray-100 border-2 border-indigo-800 rounded appearance-none"
             name="accuracy"
             v-model="num"
           />
@@ -72,11 +78,10 @@
 </template>
 
 <script>
-/* eslint-disable */
 export default {
   data() {
     return {
-      num: this.$store.state.accuracy
+      num: this.$store.state.accuracy,
     };
   },
   methods: {
@@ -85,7 +90,7 @@ export default {
     },
     updateAccuracyValue(accuracy) {
       this.$store.state.accuracy = accuracy;
-    }
+    },
   },
   computed: {
     accuracy() {
@@ -98,16 +103,37 @@ export default {
       set(value) {
         this.$store.commit("updateLeague", value);
         this.$store.dispatch("loadData");
-      }
+      },
     },
     availableLeagues() {
       return this.$store.state.availableLeagues;
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style lang="scss">
+<style lang="postcss">
+/* @import "./../node_modules/hamburgers/dist/hamburgers.min.css"; */
+
+/* Button */
+.btn {
+  @apply w-full p-4 mt-4 font-bold text-white border-t border-b rounded shadow;
+}
+
+/* Select */
+.select {
+  @apply block w-full px-4 py-3 pt-4 pr-8 text-lg font-semibold leading-tight bg-white border-2 rounded appearance-none border-gray-200 text-gray-800;
+}
+
+.select--yellow {
+  @apply border-yellow-200 text-yellow-500 bg-yellow-100;
+}
+
+/* Select lable */
+.select__label {
+  @apply block px-4 mt-4 mb-2 text-xs font-extrabold tracking-wide text-left uppercase border-l-2 text-indigo-500 border-gray-100;
+}
+
 @font-face {
   font-family: "sofia-pro-soft";
   src: url("./assets/fonts/SofiaProSoftRegular.ttf");

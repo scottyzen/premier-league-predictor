@@ -1,20 +1,19 @@
-import Vue from "vue";
-import VueAnalytics from "vue-analytics";
-// import Meta from "vue-meta";
+import { createApp } from "vue";
+import "./tailwind.css";
 import App from "./App.vue";
-import router from "./router";
-import store from "./store";
+import { createRouter, createWebHistory } from "vue-router";
+import { createStore } from "vuex";
+import { routes } from "./routes.js";
+import { store } from "./store";
 
-Vue.config.productionTip = false;
+const app = createApp(App);
 
-Vue.use(VueAnalytics, {
-  id: "UA-127390099-1",
-  router
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
 });
-// Vue.use(Meta);
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount("#app");
+app.use(router);
+app.use(createStore(store));
+
+app.mount("#app");
